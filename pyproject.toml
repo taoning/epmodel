@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "epmodel"
+version = "0.1.0"
+description = 'Data models for EnergyPlus automatically generated from EnergyPlus JSON schema using datamodel-code-generator.'
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+  { name = "Taoning Wang", email = "taoningwang@lbl.gov" },
+]
+dependencies = [
+  "pydantic>=2.2.1",
+  "datamodel-code-generator>=0.21.4",
+]
+license = {"text"="BSD-3-Clause-LBNL"}
