@@ -12,6 +12,6 @@ authors = [
   { name = "Taoning Wang", email = "taoningwang@lbl.gov" },
 ]
 dependencies = [
-  "pydantic>=2.2.1",
+  "pydantic>=2.3.0",
 ]
 license = {"file"="LICENSE"}
