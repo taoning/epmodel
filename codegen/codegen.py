@@ -31,7 +31,7 @@ schema["properties"] = trimmed_props
 json_schema = json.dumps(schema)
 
 # generate code
-output = Path("src") / "epmodel" / "model.py"
+output = Path("..") / "epmodel2.py"
 generate(
     json_schema,
     input_file_type=InputFileType.JsonSchema,
