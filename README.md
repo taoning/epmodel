@@ -47,5 +47,5 @@ autocomplete in IDE to help use write the code.
 
 ## Dependencies
 
-* [[pydantic]](https://github.com/pydantic/pydantic)
-* [[datamodel-code-generator]](https://github.com/koxudaxi/datamodel-code-generator)
+* [pydantic](https://github.com/pydantic/pydantic)
+* [datamodel-code-generator](https://github.com/koxudaxi/datamodel-code-generator)
