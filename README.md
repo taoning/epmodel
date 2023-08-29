@@ -18,7 +18,7 @@ We can add object to the data model by adding names directly to the `keys.txt` f
 
 ### Generate the source code
 
-To generate the source code, run the following command:
+To generate the source code, run the following command inside the `codegen` directory:
 
 ```bash
 python codegen.py
@@ -48,4 +48,7 @@ autocomplete in IDE to help use write the code.
 ## Dependencies
 
 * [pydantic](https://github.com/pydantic/pydantic)
+
+### Dependency for code generation
+
 * [datamodel-code-generator](https://github.com/koxudaxi/datamodel-code-generator)
