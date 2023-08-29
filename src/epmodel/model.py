@@ -7,7 +7,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, Field, RootModel, ConfigDict
 
 
 class Version(BaseModel):
@@ -5182,6 +5182,8 @@ class ModelType(Enum):
 
 
 class CoolingTowerVariableSpeed(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     water_inlet_node_name: str
     water_outlet_node_name: str
     model_type: Optional[ModelType] = "YorkCalc"
