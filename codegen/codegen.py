@@ -1,6 +1,6 @@
 """
-This module uses datamodel-code-generator to generate the EnergyPlus pydantic model
-The schema is trimmed to only include the keys in keys.txt
+This module uses datamodel-code-generator to generate the EnergyPlus
+pydantic model. The schema is trimmed to only include the keys in keys.txt
 """
 
 import json
@@ -25,10 +25,13 @@ with open(schema_path) as f:
     schema = json.load(f)
 
 root_props = schema["properties"]
-trimmed_props = {k:v for k,v in root_props.items() if k in keys}
+trimmed_props = {k: v for k, v in root_props.items() if k in keys}
 
 schema["properties"] = trimmed_props
 json_schema = json.dumps(schema)
+with open("trimmed_schema.json", "w") as f:
+    f.write(json_schema)
+
 
 # generate code
 output = Path("..") / "epmodel2.py"
@@ -42,8 +45,9 @@ generate(
     use_double_quotes=True,
     enum_field_as_literal=LiteralType.One,
     reuse_model=True,
-    use_non_positive_negative_number_constrained_types=True,
     field_constraints=True,
+    use_annotated=True,
+    set_default_enum_member=True,
     target_python_version=PythonVersion.PY_38,
     class_name="EnergyPlusModel",
 )
