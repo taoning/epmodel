@@ -2,9 +2,12 @@ from pathlib import Path
 import json
 from epmodel import (
     EnergyPlusModel,
+)
+from epmodel.epmodel import (
     WindowMaterialGas,
     GasType,
 )
+
 import pytest
 
 @pytest.fixture
