@@ -100,19 +100,7 @@ class ConstructionComplexFenestrationStateBuilder:
     ):
         self.energyplus_model = energyplus_model
         self.name = name
-        self.attributes = {
-            "basis_matrix_name": "",
-            "basis_symmetry_type": "",
-            "basis_type": epm.BasisType.lbnlwindow,
-            "solar_optical_complex_back_reflectance_matrix_name": "",
-            "solar_optical_complex_front_transmittance_matrix_name": "",
-            "visible_optical_complex_back_transmittance_matrix_name": "",
-            "visible_optical_complex_front_transmittance_matrix_name": "",
-            "window_thermal_model": "",
-            "outside_layer_directional_back_absoptance_matrix_name": "",
-            "outside_layer_directional_front_absoptance_matrix_name": "",
-            "outside_layer_name": "",
-        }
+        self.attributes = {}
         if input:
             self.set_all_input(input)
 
@@ -163,19 +151,21 @@ class ConstructionComplexFenestrationStateBuilder:
             f"{self.name}_Tfvis",
             input.visible_transmittance_front
         )
-        self.set_layer_directional_absorptance_matrix_name(
-            1,
-            Direction.back,
-            f"{self.name}_layer_1_bAbs",
-            input.layer_absorptance_back[0]
-        )
 
-        self.set_layer_directional_absorptance_matrix_name(
-            1,
-            Direction.front,
-            f"{self.name}_layer_1_fAbs",
-            input.layer_absorptance_front[0]
-        )
+        for idx, fabs in enumerate(input.layer_absorptance_front):
+            self.set_layer_directional_absorptance_matrix_name(
+                idx + 1,
+                Direction.front,
+                f"{self.name}_layer_{idx+1}_fAbs",
+                fabs,
+            )
+        for idx, babs in enumerate(input.layer_absorptance_back):
+            self.set_layer_directional_absorptance_matrix_name(
+                idx + 1,
+                Direction.back,
+                f"{self.name}_layer_{idx+1}_bAbs",
+                babs,
+            )
         for idx, gap in enumerate(input.gaps):
             self.set_gap(
                 idx + 1,
@@ -290,7 +280,6 @@ class ConstructionComplexFenestrationStateBuilder:
             ),
         )
         return self
-
 
     def set_basis_type(
         self,
