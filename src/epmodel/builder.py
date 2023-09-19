@@ -2,7 +2,7 @@
 Functions: helper function usually to create base level components
 Classes: Factory class to create systems
 """
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 from enum import Enum
 
@@ -40,6 +40,7 @@ class GlazingLayerType(Enum):
 
 class ConstructionComplexFenestrationStateInput(BaseModel):
     """Input for ConstructionComplexFenestrationState."""
+
     layer_names: List[str]
     product_types: List[str]
     layer_thickness: List[float]
@@ -92,11 +93,13 @@ def get_matrix_two_dimension(matrix: List[List[float]]) -> epm.MatrixTwoDimensio
 
 
 class ConstructionComplexFenestrationStateBuilder:
+    """Builder class for ConstructionComplexFenestrationState."""
+
     def __init__(
         self,
         name: str,
         energyplus_model: "EnergyPlusModel",
-        input: ConstructionComplexFenestrationStateInput,
+        input: Optional[ConstructionComplexFenestrationStateInput],
     ):
         self.energyplus_model = energyplus_model
         self.name = name
@@ -108,7 +111,7 @@ class ConstructionComplexFenestrationStateBuilder:
         self.energyplus_model.add(
             "construction_complex_fenestration_state",
             self.name,
-            epm.ConstructionComplexFenestrationState(**self.attributes)
+            epm.ConstructionComplexFenestrationState(**self.attributes),
         )
 
     def set_all_input(self, input: ConstructionComplexFenestrationStateInput):
@@ -128,28 +131,28 @@ class ConstructionComplexFenestrationStateBuilder:
             Direction.back,
             RadiativeType.reflectance,
             f"{self.name}_RbSol",
-            input.solar_reflectance_back
+            input.solar_reflectance_back,
         )
         self.set_optical_complex_matrix_name(
             Spectrum.solar,
             Direction.back,
             RadiativeType.transmittance,
             f"{self.name}_TfSol",
-            input.solar_transmittance_back
+            input.solar_transmittance_back,
         )
         self.set_optical_complex_matrix_name(
             Spectrum.visible,
             Direction.back,
             RadiativeType.transmittance,
             f"{self.name}_Tbvis",
-            input.visible_transmittance_back
+            input.visible_transmittance_back,
         )
         self.set_optical_complex_matrix_name(
             Spectrum.visible,
             Direction.front,
             RadiativeType.transmittance,
             f"{self.name}_Tfvis",
-            input.visible_transmittance_front
+            input.visible_transmittance_front,
         )
 
         for idx, fabs in enumerate(input.layer_absorptance_front):
@@ -199,7 +202,6 @@ class ConstructionComplexFenestrationStateBuilder:
                 input.layer_thickness[idx],
             )
 
-
     def set_gap(
         self,
         layer_index: int,
@@ -207,6 +209,20 @@ class ConstructionComplexFenestrationStateBuilder:
         gas_type: epm.GasType,
         thickness: float,
     ) -> "ConstructionComplexFenestrationStateBuilder":
+        """Set gap layer.
+
+        Args:
+            layer_index: index of layer
+            name: name of gap
+            gas_type: gas type
+            thickness: thickness of gap
+
+        Returns:
+            ConstructionComplexFenestrationStateBuilder
+
+        Raises:
+            ValueError: If layer index is not between 1 and 4.
+        """
         if layer_index < 1 or layer_index > 4:
             raise ValueError("Layer index must be between 1 and 4.")
         self.energyplus_model.add(
@@ -226,59 +242,6 @@ class ConstructionComplexFenestrationStateBuilder:
             ),
         )
         self.attributes[f"gap_{layer_index}_name"] = name
-        return self
-
-    def set_glazing_layer(
-        self,
-        name: str,
-        emissivity_front: float,
-        emissivity_back: float,
-        conductivity: float,
-        ir_transmittance: float,
-        thickness: float,
-    )-> "ConstructionComplexFenestrationStateBuilder":
-        self.energyplus_model.add(
-            "window_material_glazing",
-            name,
-            epm.WindowMaterialGlazing(
-                back_side_infrared_hemispherical_emissivity=emissivity_back,
-                conductivity=conductivity,
-                front_side_infrared_hemispherical_emissivity=emissivity_front,
-                infrared_transmittance_at_normal_incidence=ir_transmittance,
-                optical_data_type=epm.OpticalDataType.bsdf,
-                poisson_s_ratio=0.22,
-                thickness=thickness,
-                window_glass_spectral_data_set_name="",
-            ),
-        )
-        return self
-
-    def set_shading_layer(
-        self,
-        name: str,
-        emissivity_front: float,
-        emissivity_back: float,
-        conductivity: float,
-        ir_transmittance: float,
-        thickness: float,
-    ) -> "ConstructionComplexFenestrationStateBuilder":
-        self.energyplus_model.add(
-            "window_material_complex_shade",
-            name,
-            epm.WindowMaterialComplexShade(
-                back_emissivity=emissivity_back,
-                top_opening_multiplier=0,
-                bottom_opening_multiplier=0,
-                left_side_opening_multiplier=0,
-                right_side_opening_multiplier=0,
-                front_opening_multiplier=0.05,
-                conductivity=conductivity,
-                front_emissivity=emissivity_front,
-                ir_transmittance=ir_transmittance,
-                layer_type=epm.LayerType.bsdf,
-                thickness=thickness,
-            ),
-        )
         return self
 
     def set_basis_type(
@@ -337,9 +300,8 @@ class ConstructionComplexFenestrationStateBuilder:
         direction: Direction,
         radiative_type: RadiativeType,
         name: str,
-        matrix_data: List[List[float]]
+        matrix_data: List[List[float]],
     ) -> "ConstructionComplexFenestrationStateBuilder":
-
         self.energyplus_model.add(
             "matrix_two_dimension",
             name,
@@ -359,30 +321,65 @@ class ConstructionComplexFenestrationStateBuilder:
         ir_transmittance: float,
         conductivity: float,
         thickness: float,
-    ):
+    ) -> "ConstructionComplexFenestrationStateBuilder":
+        """Set layer.
+
+        Args:
+            layer_index: index of layer
+            name: name of layer
+            product_type: product type
+            emissivity_front: front side emissivity
+            emissivity_back: back side emissivity
+            ir_transmittance: infrared transmittance
+            conductivity: conductivity
+            thickness: thickness
+
+        Returns:
+            ConstructionComplexFenestrationStateBuilder
+
+        Raises:
+            ValueError: If layer index is not between 1 and 5.
+        """
         if layer_index < 1 or layer_index > 5:
             raise ValueError("Layer index must be between 1 and 5.")
 
         if product_type == GlazingLayerType.glazing:
-            self.set_glazing_layer(
+            self.energyplus_model.add(
+                "window_material_glazing",
                 name,
-                emissivity_front,
-                emissivity_back,
-                conductivity,
-                ir_transmittance,
-                thickness,
+                epm.WindowMaterialGlazing(
+                    back_side_infrared_hemispherical_emissivity=emissivity_back,
+                    conductivity=conductivity,
+                    front_side_infrared_hemispherical_emissivity=emissivity_front,
+                    infrared_transmittance_at_normal_incidence=ir_transmittance,
+                    optical_data_type=epm.OpticalDataType.bsdf,
+                    poisson_s_ratio=0.22,
+                    thickness=thickness,
+                    window_glass_spectral_data_set_name="",
+                ),
             )
         # Assuming shading if not glazing
         else:
-            self.set_shading_layer(
+            self.energyplus_model.add(
+                "window_material_complex_shade",
                 name,
-                emissivity_front,
-                emissivity_back,
-                conductivity,
-                ir_transmittance,
-                thickness,
+                epm.WindowMaterialComplexShade(
+                    back_emissivity=emissivity_back,
+                    top_opening_multiplier=0,
+                    bottom_opening_multiplier=0,
+                    left_side_opening_multiplier=0,
+                    right_side_opening_multiplier=0,
+                    front_opening_multiplier=0.05,
+                    conductivity=conductivity,
+                    front_emissivity=emissivity_front,
+                    ir_transmittance=ir_transmittance,
+                    layer_type=epm.LayerType.bsdf,
+                    thickness=thickness,
+                ),
             )
-        layer_key = f"layer_{layer_index}_name" if layer_index > 1 else "outside_layer_name"
+        layer_key = (
+            f"layer_{layer_index}_name" if layer_index > 1 else "outside_layer_name"
+        )
         self.attributes[layer_key] = name
         return self
 
@@ -391,8 +388,23 @@ class ConstructionComplexFenestrationStateBuilder:
         layer_index: int,
         direction: Direction,
         name: str,
-        layer_absorptance: List[float]
-    ):
+        layer_absorptance: List[float],
+    ) -> "ConstructionComplexFenestrationStateBuilder":
+        """Set layer directional absorptance matrix name.
+
+        Args:
+            layer_index: index of layer
+            direction: direction of optical properties
+            name: name of matrix
+            layer_absorptance: layer absorptance matrix
+
+        Returns:
+            ConstructionComplexFenestrationStateBuilder
+
+        Raises:
+            ValueError: If layer index is not between 1 and 5.
+
+        """
         if layer_index < 1 or layer_index > 5:
             raise ValueError("Layer index must be between 1 and 5.")
 
@@ -402,7 +414,9 @@ class ConstructionComplexFenestrationStateBuilder:
             get_matrix_two_dimension_single_row(layer_absorptance),
         )
         if layer_index == 1:
-            attribute_key = f"outside_layer_directional_{direction.value}_absoptance_matrix_name"
+            attribute_key = (
+                f"outside_layer_directional_{direction.value}_absoptance_matrix_name"
+            )
         else:
             attribute_key = f"layer_{layer_index}_directional_{direction.value}_absoptance_matrix_name"
         self.attributes[attribute_key] = name

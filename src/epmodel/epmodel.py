@@ -21,24 +21,12 @@ class EPBoolean(Enum):
 
 
 class SimulationControl(BaseModel):
-    do_zone_sizing_calculation: Optional[
-        EPBoolean
-    ] = EPBoolean.no
-    do_system_sizing_calculation: Optional[
-        EPBoolean
-    ] = EPBoolean.no
-    do_plant_sizing_calculation: Optional[
-        EPBoolean
-    ] = EPBoolean.no
-    run_simulation_for_sizing_periods: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
-    run_simulation_for_weather_file_run_periods: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
-    do_hvac_sizing_simulation_for_sizing_periods: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    do_zone_sizing_calculation: Optional[EPBoolean] = EPBoolean.no
+    do_system_sizing_calculation: Optional[EPBoolean] = EPBoolean.no
+    do_plant_sizing_calculation: Optional[EPBoolean] = EPBoolean.no
+    run_simulation_for_sizing_periods: Optional[EPBoolean] = EPBoolean.yes
+    run_simulation_for_weather_file_run_periods: Optional[EPBoolean] = EPBoolean.yes
+    do_hvac_sizing_simulation_for_sizing_periods: Optional[EPBoolean] = EPBoolean.no
     maximum_number_of_hvac_sizing_simulation_passes: Annotated[
         Optional[int], Field(ge=1)
     ] = 1
@@ -121,12 +109,8 @@ class ShadowCalculation(BaseModel):
     sky_diffuse_modeling_algorithm: Optional[
         SkyDiffuseModelingAlgorithm
     ] = SkyDiffuseModelingAlgorithm.simple_sky_diffuse_modeling
-    output_external_shading_calculation_results: Optional[
-        EPBoolean
-    ] = EPBoolean.no
-    disable_self_shading_within_shading_zone_groups: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    output_external_shading_calculation_results: Optional[EPBoolean] = EPBoolean.no
+    disable_self_shading_within_shading_zone_groups: Optional[EPBoolean] = EPBoolean.no
     disable_self_shading_from_shading_zone_groups_to_other_zones: Optional[
         EPBoolean
     ] = EPBoolean.no
@@ -185,22 +169,14 @@ class Algorithm3(Enum):
 
 class ZoneAirHeatBalanceAlgorithm(BaseModel):
     algorithm: Optional[Algorithm3] = Algorithm3.third_order_backward_difference
-    do_space_heat_balance_for_sizing: Optional[
-        EPBoolean
-    ] = EPBoolean.no
-    do_space_heat_balance_for_simulation: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    do_space_heat_balance_for_sizing: Optional[EPBoolean] = EPBoolean.no
+    do_space_heat_balance_for_simulation: Optional[EPBoolean] = EPBoolean.no
 
 
 class ZoneAirContaminantBalance(BaseModel):
-    carbon_dioxide_concentration: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    carbon_dioxide_concentration: Optional[EPBoolean] = EPBoolean.no
     outdoor_carbon_dioxide_schedule_name: Optional[str] = None
-    generic_contaminant_concentration: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    generic_contaminant_concentration: Optional[EPBoolean] = EPBoolean.no
     outdoor_generic_contaminant_schedule_name: Optional[str] = None
 
 
@@ -305,9 +281,7 @@ class SizingPeriodDesignDay(BaseModel):
     wind_direction: Annotated[float, Field(ge=0.0, le=360.0)]
     rain_indicator: Optional[EPBoolean] = EPBoolean.no
     snow_indicator: Optional[EPBoolean] = EPBoolean.no
-    daylight_saving_time_indicator: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    daylight_saving_time_indicator: Optional[EPBoolean] = EPBoolean.no
     solar_model_indicator: Optional[
         SolarModelIndicator
     ] = SolarModelIndicator.ashrae_clear_sky
@@ -349,24 +323,12 @@ class RunPeriod(BaseModel):
     end_day_of_month: Annotated[int, Field(ge=1, le=31)]
     end_year: Optional[float] = None
     day_of_week_for_start_day: Optional[DayOfWeekForStartDay] = None
-    use_weather_file_holidays_and_special_days: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
-    use_weather_file_daylight_saving_period: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
-    apply_weekend_holiday_rule: Optional[
-        EPBoolean
-    ] = EPBoolean.no
-    use_weather_file_rain_indicators: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
-    use_weather_file_snow_indicators: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
-    treat_weather_as_actual: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    use_weather_file_holidays_and_special_days: Optional[EPBoolean] = EPBoolean.yes
+    use_weather_file_daylight_saving_period: Optional[EPBoolean] = EPBoolean.yes
+    apply_weekend_holiday_rule: Optional[EPBoolean] = EPBoolean.no
+    use_weather_file_rain_indicators: Optional[EPBoolean] = EPBoolean.yes
+    use_weather_file_snow_indicators: Optional[EPBoolean] = EPBoolean.yes
+    treat_weather_as_actual: Optional[EPBoolean] = EPBoolean.no
     first_hour_interpolation_starting_values: Optional[
         FirstHourInterpolationStartingValues
     ] = FirstHourInterpolationStartingValues.hour24
@@ -893,9 +855,7 @@ class Zone(BaseModel):
     ] = CeilingHeightEnum.autocalculate
     zone_inside_convection_algorithm: Optional[ZoneInsideConvectionAlgorithm] = None
     zone_outside_convection_algorithm: Optional[Algorithm1] = None
-    part_of_total_floor_area: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
+    part_of_total_floor_area: Optional[EPBoolean] = EPBoolean.yes
 
 
 class Zone1(BaseModel):
@@ -1217,9 +1177,7 @@ class People(BaseModel):
     carbon_dioxide_generation_rate: Annotated[
         Optional[float], Field(ge=0.0, le=3.82e-07)
     ] = 3.82e-08
-    enable_ashrae_55_comfort_warnings: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    enable_ashrae_55_comfort_warnings: Optional[EPBoolean] = EPBoolean.no
     mean_radiant_temperature_calculation_type: Optional[
         MeanRadiantTemperatureCalculationType
     ] = MeanRadiantTemperatureCalculationType.zone_averaged
@@ -1729,9 +1687,7 @@ class SizingZone(BaseModel):
     heating_maximum_air_flow: Annotated[Optional[float], Field(ge=0.0)] = 0.1415762
     heating_maximum_air_flow_fraction: Annotated[Optional[float], Field(ge=0.0)] = 0.3
     design_specification_zone_air_distribution_object_name: Optional[str] = None
-    account_for_dedicated_outdoor_air_system: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    account_for_dedicated_outdoor_air_system: Optional[EPBoolean] = EPBoolean.no
     dedicated_outdoor_air_system_control_strategy: Optional[
         DedicatedOutdoorAirSystemControlStrategy
     ] = DedicatedOutdoorAirSystemControlStrategy.neutral_supply_air
@@ -2363,9 +2319,7 @@ class ZoneHvacEnergyRecoveryVentilatorController(BaseModel):
         ExhaustAirEnthalpyLimit
     ] = ExhaustAirEnthalpyLimit.no_exhaust_air_enthalpy_limit
     time_of_day_economizer_flow_control_schedule_name: Optional[str] = None
-    high_humidity_control_flag: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    high_humidity_control_flag: Optional[EPBoolean] = EPBoolean.no
     humidistat_control_zone_name: Optional[str] = None
     high_humidity_outdoor_air_flow_ratio: Annotated[
         Optional[float], Field(gt=0.0)
@@ -3107,9 +3061,7 @@ class CoilCoolingDxSingleSpeed(BaseModel):
     basin_heater_operating_schedule_name: Optional[str] = None
     sensible_heat_ratio_function_of_temperature_curve_name: Optional[str] = None
     sensible_heat_ratio_function_of_flow_fraction_curve_name: Optional[str] = None
-    report_ashrae_standard_127_performance_ratings: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    report_ashrae_standard_127_performance_ratings: Optional[EPBoolean] = EPBoolean.no
     zone_name_for_condenser_placement: Optional[str] = None
 
 
@@ -3861,13 +3813,9 @@ class CoilSystemCoolingDx(BaseModel):
     dehumidification_control_type: Optional[
         DehumidificationControlType1
     ] = DehumidificationControlType1.none
-    run_on_sensible_load: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
+    run_on_sensible_load: Optional[EPBoolean] = EPBoolean.yes
     run_on_latent_load: Optional[EPBoolean] = EPBoolean.no
-    use_outdoor_air_dx_cooling_coil: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    use_outdoor_air_dx_cooling_coil: Optional[EPBoolean] = EPBoolean.no
     outdoor_air_dx_cooling_coil_leaving_minimum_air_temperature: Annotated[
         Optional[float], Field(ge=0.0, le=7.2)
     ] = 2.0
@@ -3938,9 +3886,7 @@ class HeatExchangerAirToAirSensibleAndLatent(BaseModel):
     exhaust_air_inlet_node_name: str
     exhaust_air_outlet_node_name: str
     nominal_electric_power: Annotated[Optional[float], Field(ge=0.0)] = 0.0
-    supply_air_outlet_temperature_control: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    supply_air_outlet_temperature_control: Optional[EPBoolean] = EPBoolean.no
     heat_exchanger_type: Optional[HeatExchangerType] = HeatExchangerType.plate
     frost_control_type: Optional[FrostControlType] = FrostControlType.none
     threshold_temperature: Optional[float] = 1.7
@@ -4100,9 +4046,7 @@ class AirLoopHvacUnitarySystem(BaseModel):
     dx_heating_coil_sizing_ratio: Annotated[Optional[float], Field(gt=0.0)] = 1.0
     cooling_coil_object_type: Optional[CoolingCoilObjectType3] = None
     cooling_coil_name: Optional[str] = None
-    use_doas_dx_cooling_coil: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    use_doas_dx_cooling_coil: Optional[EPBoolean] = EPBoolean.no
     minimum_supply_air_temperature: Optional[
         Union[
             MinimumSupplyAirTemperatureItem,
@@ -4214,9 +4158,7 @@ class FlowRatio(BaseModel):
 class UnitarySystemPerformanceMultispeed(BaseModel):
     number_of_speeds_for_heating: Annotated[int, Field(ge=0, le=10)]
     number_of_speeds_for_cooling: Annotated[int, Field(ge=0, le=10)]
-    single_mode_operation: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    single_mode_operation: Optional[EPBoolean] = EPBoolean.no
     no_load_supply_air_flow_rate_ratio: Annotated[
         Optional[float], Field(ge=0.0, le=1.0)
     ] = 1.0
@@ -4536,9 +4478,7 @@ class ControllerOutdoorAir(BaseModel):
     maximum_fraction_of_outdoor_air_schedule_name: Optional[str] = None
     mechanical_ventilation_controller_name: Optional[str] = None
     time_of_day_economizer_control_schedule_name: Optional[str] = None
-    high_humidity_control: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    high_humidity_control: Optional[EPBoolean] = EPBoolean.no
     humidistat_control_zone_name: Optional[str] = None
     high_humidity_outdoor_air_flow_ratio: Annotated[
         Optional[float], Field(gt=0.0)
@@ -4581,9 +4521,7 @@ class ZoneSpecification(BaseModel):
 
 class ControllerMechanicalVentilation(BaseModel):
     availability_schedule_name: Optional[str] = None
-    demand_controlled_ventilation: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    demand_controlled_ventilation: Optional[EPBoolean] = EPBoolean.no
     system_outdoor_air_method: Optional[
         SystemOutdoorAirMethod1
     ] = SystemOutdoorAirMethod1.standard62_1_ventilation_rate_procedure
@@ -4791,9 +4729,7 @@ class OutdoorAirNode(BaseModel):
     wind_speed_schedule_name: Optional[str] = None
     wind_direction_schedule_name: Optional[str] = None
     wind_pressure_coefficient_curve_name: Optional[str] = None
-    symmetric_wind_pressure_coefficient_curve: Optional[
-        EPBoolean
-    ] = EPBoolean.no
+    symmetric_wind_pressure_coefficient_curve: Optional[EPBoolean] = EPBoolean.no
     wind_angle_type: Optional[WindAngleType] = WindAngleType.absolute
 
 
@@ -6851,9 +6787,7 @@ class ElectricLoadCenterTransformer(BaseModel):
     per_unit_load_for_maximum_efficiency: Annotated[
         Optional[float], Field(gt=0.0, le=1.0)
     ] = None
-    consider_transformer_loss_for_utility_cost: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
+    consider_transformer_loss_for_utility_cost: Optional[EPBoolean] = EPBoolean.yes
     meters: Optional[List[Meter]] = None
 
 
@@ -8529,9 +8463,7 @@ class OutputControlFiles(BaseModel):
     output_json: Optional[EPBoolean] = EPBoolean.yes
     output_audit: Optional[EPBoolean] = EPBoolean.yes
     output_zone_sizing: Optional[EPBoolean] = EPBoolean.yes
-    output_system_sizing: Optional[
-        EPBoolean
-    ] = EPBoolean.yes
+    output_system_sizing: Optional[EPBoolean] = EPBoolean.yes
     output_dxf: Optional[EPBoolean] = EPBoolean.yes
     output_bnd: Optional[EPBoolean] = EPBoolean.yes
     output_rdd: Optional[EPBoolean] = EPBoolean.yes
