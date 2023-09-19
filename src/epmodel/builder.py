@@ -44,7 +44,8 @@ class ConstructionComplexFenestrationStateInput(BaseModel):
     layer_names: List[str]
     product_types: List[str]
     layer_thickness: List[float]
-    gaps: List[str]
+    gap_thickness: List[float]
+    gap_gas: List[epm.GasType]
     layer_emissivity_back: List[float]
     layer_emissivity_front: List[float]
     layer_conductivity: List[float]
@@ -104,7 +105,7 @@ class ConstructionComplexFenestrationStateBuilder:
         self.energyplus_model = energyplus_model
         self.name = name
         self.attributes = {}
-        if input:
+        if input is not None:
             self.set_all_input(input)
 
     def add_to_enenrgyplus_model(self):
@@ -169,12 +170,12 @@ class ConstructionComplexFenestrationStateBuilder:
                 f"{self.name}_layer_{idx+1}_bAbs",
                 babs,
             )
-        for idx, gap in enumerate(input.gaps):
+        for idx, gas in enumerate(input.gap_gas):
             self.set_gap(
                 idx + 1,
                 f"{self.name}_gap_{idx + 1}",
-                getattr(epm.GasType, gap[0]),
-                float(gap[-1]),
+                gas,
+                input.gap_thickness[idx],
             )
         for idx, gapabs in enumerate(input.gap_absorptance_back):
             self.set_cfs_gap_directional_absorptance_matrix_name(
@@ -244,17 +245,11 @@ class ConstructionComplexFenestrationStateBuilder:
         self.attributes[f"gap_{layer_index}_name"] = name
         return self
 
-    def set_basis_type(
-        self,
-        basis_type: epm.BasisType,
-    ):
+    def set_basis_type(self, basis_type: epm.BasisType):
         self.attributes["basis_type"] = basis_type
         return self
 
-    def set_basis_symmetry_type(
-        self,
-        basis_symmetry_type: epm.BasisSymmetryType,
-    ):
+    def set_basis_symmetry_type(self, basis_symmetry_type: epm.BasisSymmetryType):
         self.attributes["basis_symmetry_type"] = basis_symmetry_type
         return self
 
@@ -468,10 +463,6 @@ class EnergyPlusModel(epm.EnergyPlusModel):
         Args:
             name: name of glazing system
             input: input parameters for glazing system
-
-        Raises:
-            ValueError: If solar and photopic results are not computed.
-            ValueError: If more than 6 layers in glazing system.
         """
         if self.fenestration_surface_detailed is None:
             raise ValueError("No fenestration_surface_detailed found in this model")
