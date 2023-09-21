@@ -2,30 +2,27 @@
 Functions: helper function usually to create base level components
 Classes: Factory class to create systems
 """
-from typing import List, Optional
-from pydantic import BaseModel
 from enum import Enum
+from typing import List, Optional
 
 from epmodel import epmodel as epm
+from pydantic import BaseModel
 
 
 class Spectrum(Enum):
     """Spectrum for optical properties."""
-
     solar = "solar"
     visible = "visible"
 
 
 class Direction(Enum):
     """Direction for optical properties."""
-
     front = "front"
     back = "back"
 
 
 class RadiativeType(Enum):
     """Radiative type for optical properties."""
-
     transmittance = "transmittance"
     reflectance = "reflectance"
     absorptance = "absorptance"
@@ -33,35 +30,43 @@ class RadiativeType(Enum):
 
 class GlazingLayerType(Enum):
     """Product type for layer."""
-
     glazing = "glazing"
     shading = "shading"
 
 
+class ConstructionComplexFenestrationStateLayerInput(BaseModel):
+    """Input for ConstructionComplexFenestrationStateLayer."""
+    name: str
+    product_type: GlazingLayerType
+    thickness: float
+    conductivity: float
+    emissivity_front: float
+    emissivity_back: float
+    infrared_transmittance: float
+    directional_absorptance_front: List[float]
+    directional_absorptance_back: List[float]
+
+
+class ConstructionComplexFenestrationStateGapInput(BaseModel):
+    """Input for ConstructionComplexFenestrationStateGap."""
+    gas: epm.GasType
+    thickness: float
+
+
 class ConstructionComplexFenestrationStateInput(BaseModel):
     """Input for ConstructionComplexFenestrationState."""
-
-    layer_names: List[str]
-    product_types: List[str]
-    layer_thickness: List[float]
-    gap_thickness: List[float]
-    gap_gas: List[epm.GasType]
-    layer_emissivity_back: List[float]
-    layer_emissivity_front: List[float]
-    layer_conductivity: List[float]
-    layer_ir_transmittance: List[float]
+    layers: List[ConstructionComplexFenestrationStateLayerInput]
+    gaps: List[ConstructionComplexFenestrationStateGapInput]
     solar_reflectance_back: List[List[float]]
     solar_transmittance_back: List[List[float]]
     visible_transmittance_back: List[List[float]]
     visible_transmittance_front: List[List[float]]
-    layer_absorptance_back: List[List[float]]
-    layer_absorptance_front: List[List[float]]
-    gap_absorptance_back: List[List[float]]
-    gap_absorptance_front: List[List[float]]
     matrix_basis: str = "Full Klems"
 
 
-def get_matrix_two_dimension_single_row(matrix: List[float]) -> epm.MatrixTwoDimension:
+def build_matrix_two_dimension_single_row(
+    matrix: List[float],
+) -> epm.MatrixTwoDimension:
     """Build MatrixTwoDimension object from single row matrix.
 
     Args:
@@ -77,7 +82,9 @@ def get_matrix_two_dimension_single_row(matrix: List[float]) -> epm.MatrixTwoDim
     )
 
 
-def get_matrix_two_dimension(matrix: List[List[float]]) -> epm.MatrixTwoDimension:
+def build_matrix_two_dimension(
+    matrix: List[List[float]]
+) -> epm.MatrixTwoDimension:
     """Get MatrixTwoDimension object from matrix.
 
     Args:
@@ -93,6 +100,52 @@ def get_matrix_two_dimension(matrix: List[List[float]]) -> epm.MatrixTwoDimensio
     )
 
 
+class EnergyPlusModel(epm.EnergyPlusModel):
+    """EnergyPlusModel with builder methods to add systems."""
+
+    def add(self, objkey, objname, obj):
+        """Add object to EnergyPlusModel.
+        This method assume the object is a dictionary in
+        EnergyPlusModel.
+
+        Args:
+            objkey: key of object in EnergyPlusModel
+            objname: name of the object
+            obj: object to add
+        """
+        if getattr(self, objkey) is None:
+            setattr(self, objkey, {objname: obj})
+        else:
+            getattr(self, objkey)[objname] = obj
+
+    def add_construction_complex_fenestration_state(
+        self,
+        name: str,
+        input: ConstructionComplexFenestrationStateInput,
+    ) -> None:
+        """Add a construction_complex_fenestration_state to the model.
+        We also set all fenestration_surface_detailed in the model to
+        the first construction_complex_fenestration_state.
+
+        Args:
+            name: name of glazing system
+            input: input parameters construction_complex_fenestration_state
+        """
+        if self.fenestration_surface_detailed is None:
+            raise ValueError("No fenestration_surface_detailed found in this model")
+
+        builder = ConstructionComplexFenestrationStateBuilder(name, self, input)
+        builder.add_to_enenrgyplus_model()
+
+        if self.construction_complex_fenestration_state is None:
+            raise ValueError("No construction_complex_fenestration_state")
+
+        # Set the all fenestration surface constructions to the 1st cfs
+        first_cfs = next(iter(self.construction_complex_fenestration_state.keys()))
+        for window in self.fenestration_surface_detailed.values():
+            window.construction_name = first_cfs
+
+
 class ConstructionComplexFenestrationStateBuilder:
     """Builder class for ConstructionComplexFenestrationState."""
 
@@ -105,14 +158,17 @@ class ConstructionComplexFenestrationStateBuilder:
         self.energyplus_model = energyplus_model
         self.name = name
         self.attributes = {}
-        if input is not None:
-            self.set_all_input(input)
+        self.input = input
 
     def add_to_enenrgyplus_model(self):
+        if self.input is not None:
+            self.set_all_input(self.input)
+        if self.attributes == {}:
+            raise ValueError("Attributes not set for ConstructionComplexFenestrationState")
         self.energyplus_model.add(
             "construction_complex_fenestration_state",
             self.name,
-            epm.ConstructionComplexFenestrationState(**self.attributes),
+            epm.ConstructionComplexFenestrationState.model_validate(self.attributes),
         )
 
     def set_all_input(self, input: ConstructionComplexFenestrationStateInput):
@@ -136,7 +192,7 @@ class ConstructionComplexFenestrationStateBuilder:
         )
         self.set_optical_complex_matrix_name(
             Spectrum.solar,
-            Direction.back,
+            Direction.front,
             RadiativeType.transmittance,
             f"{self.name}_TfSol",
             input.solar_transmittance_back,
@@ -156,51 +212,36 @@ class ConstructionComplexFenestrationStateBuilder:
             input.visible_transmittance_front,
         )
 
-        for idx, fabs in enumerate(input.layer_absorptance_front):
+        for idx, layer in enumerate(input.layers):
             self.set_layer_directional_absorptance_matrix_name(
                 idx + 1,
                 Direction.front,
                 f"{self.name}_layer_{idx+1}_fAbs",
-                fabs,
+                layer.directional_absorptance_front,
             )
-        for idx, babs in enumerate(input.layer_absorptance_back):
             self.set_layer_directional_absorptance_matrix_name(
                 idx + 1,
                 Direction.back,
                 f"{self.name}_layer_{idx+1}_bAbs",
-                babs,
+                layer.directional_absorptance_back,
             )
-        for idx, gas in enumerate(input.gap_gas):
+            self.set_layer(
+                idx + 1,
+                layer.name,
+                layer.product_type,
+                layer.emissivity_front,
+                layer.emissivity_back,
+                layer.infrared_transmittance,
+                layer.conductivity,
+                layer.thickness,
+            )
+
+        for idx, gap in enumerate(input.gaps):
             self.set_gap(
                 idx + 1,
                 f"{self.name}_gap_{idx + 1}",
-                gas,
-                input.gap_thickness[idx],
-            )
-        for idx, gapabs in enumerate(input.gap_absorptance_back):
-            self.set_cfs_gap_directional_absorptance_matrix_name(
-                idx + 1,
-                Direction.back,
-                f"{self.name}_gap_{idx+1}_bAbs",
-                gapabs,
-            )
-        for idx, gapabs in enumerate(input.gap_absorptance_front):
-            self.set_cfs_gap_directional_absorptance_matrix_name(
-                idx + 1,
-                Direction.front,
-                f"{self.name}_gap_{idx+1}_fAbs",
-                gapabs,
-            )
-        for idx, name in enumerate(input.layer_names):
-            self.set_layer(
-                idx + 1,
-                name,
-                getattr(GlazingLayerType, input.product_types[idx]),
-                input.layer_emissivity_front[idx],
-                input.layer_emissivity_back[idx],
-                input.layer_conductivity[idx],
-                input.layer_ir_transmittance[idx],
-                input.layer_thickness[idx],
+                gap.gas,
+                gap.thickness,
             )
 
     def set_gap(
@@ -228,7 +269,7 @@ class ConstructionComplexFenestrationStateBuilder:
             raise ValueError("Layer index must be between 1 and 4.")
         self.energyplus_model.add(
             "window_material_gas",
-            gas_type,
+            gas_type.value,
             epm.WindowMaterialGas(
                 gas_type=gas_type,
                 thickness=thickness,
@@ -238,7 +279,7 @@ class ConstructionComplexFenestrationStateBuilder:
             "window_material_gap",
             name,
             epm.WindowMaterialGap(
-                gas_or_gas_mixture_=str(gas_type),
+                gas_or_gas_mixture_=gas_type.value,
                 thickness=thickness,
             ),
         )
@@ -272,7 +313,7 @@ class ConstructionComplexFenestrationStateBuilder:
         self.energyplus_model.add(
             "matrix_two_dimension",
             name,
-            get_matrix_two_dimension(
+            build_matrix_two_dimension(
                 [
                     [0.0, 1.0],
                     [10.0, 8.0],
@@ -300,7 +341,7 @@ class ConstructionComplexFenestrationStateBuilder:
         self.energyplus_model.add(
             "matrix_two_dimension",
             name,
-            get_matrix_two_dimension(matrix_data),
+            build_matrix_two_dimension(matrix_data),
         )
         attribute_key = f"{spectrum.value}_optical_complex_{direction.value}_{radiative_type.value}_matrix_name"
         self.attributes[attribute_key] = name
@@ -406,7 +447,7 @@ class ConstructionComplexFenestrationStateBuilder:
         self.energyplus_model.add(
             "matrix_two_dimension",
             name,
-            get_matrix_two_dimension_single_row(layer_absorptance),
+            build_matrix_two_dimension_single_row(layer_absorptance),
         )
         if layer_index == 1:
             attribute_key = (
@@ -416,64 +457,3 @@ class ConstructionComplexFenestrationStateBuilder:
             attribute_key = f"layer_{layer_index}_directional_{direction.value}_absoptance_matrix_name"
         self.attributes[attribute_key] = name
         return self
-
-    def set_cfs_gap_directional_absorptance_matrix_name(
-        self,
-        layer_index: int,
-        direction: Direction,
-        name: str,
-        layer_absorptance: List[float],
-    ):
-        if layer_index < 1 or layer_index > 4:
-            raise ValueError("Layer index must be between 1 and 4.")
-
-        self.energyplus_model.add(
-            "matrix_two_dimension",
-            name,
-            get_matrix_two_dimension_single_row(layer_absorptance),
-        )
-        attribute_key = f"cfs_gap_{layer_index}_directional_{direction.value}_absoptance_matrix_name"
-        self.attributes[attribute_key] = name
-        return self
-
-
-class EnergyPlusModel(epm.EnergyPlusModel):
-    def add(self, objkey, objname, obj):
-        """Add object to EnergyPlusModel.
-        This method assume the object is a dictionary in
-        EnergyPlusModel.
-
-        Args:
-            objkey: key of object in EnergyPlusModel
-            objname: name of the object
-            obj: object to add
-        """
-        if getattr(self, objkey) is None:
-            setattr(self, objkey, {objname: obj})
-        else:
-            getattr(self, objkey)[objname] = obj
-
-    def add_construction_complex_fenestration_state(
-        self,
-        name: str,
-        input: ConstructionComplexFenestrationStateInput,
-    ) -> None:
-        """Add glazing system to EnergyPlusModel's epjs dictionary.
-
-        Args:
-            name: name of glazing system
-            input: input parameters for glazing system
-        """
-        if self.fenestration_surface_detailed is None:
-            raise ValueError("No fenestration_surface_detailed found in this model")
-
-        builder = ConstructionComplexFenestrationStateBuilder(name, self, input)
-        builder.add_to_enenrgyplus_model()
-
-        if self.construction_complex_fenestration_state is None:
-            raise ValueError("No construction_complex_fenestration_state")
-
-        # Set the all fenestration surface constructions to the 1st cfs
-        first_cfs = next(iter(self.construction_complex_fenestration_state.keys()))
-        for window in self.fenestration_surface_detailed.values():
-            window.construction_name = first_cfs
