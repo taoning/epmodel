@@ -4,7 +4,7 @@ Tests configuration
 import json
 from pathlib import Path
 
-from epmodel.builder import EnergyPlusModel
+from epmodel import EnergyPlusModel
 
 import pytest
 
