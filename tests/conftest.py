@@ -1,9 +1,10 @@
 """
+Tests configuration
 """
 import json
 from pathlib import Path
 
-from epmodel.epmodel import EnergyPlusModel
+from epmodel.builder import EnergyPlusModel
 
 import pytest
 
@@ -11,11 +12,11 @@ import pytest
 def test_data_dir():
     return Path(__file__).parent / 'data'
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def test_file1(test_data_dir):
     return test_data_dir / "RefBldgPrimarySchoolNew2004_Chicago.epJSON"
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def test_file2(test_data_dir):
     return test_data_dir / "RefBldgMediumOfficeNew2004_Chicago_epJSON.epJSON"
 
