@@ -34,7 +34,7 @@ with open("trimmed_schema.json", "w") as f:
 
 
 # generate code
-output = Path("..") / "epmodel2.py"
+output = Path("epmodel.py")
 generate(
     json_schema,
     input_file_type=InputFileType.JsonSchema,
