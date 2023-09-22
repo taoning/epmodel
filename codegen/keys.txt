@@ -207,6 +207,7 @@ AirLoopHVAC:ZoneSplitter
 SetpointManager:MultiZone:Humidity:Maximum
 BranchList
 OutputControl:Files
+OutputControl:Timestamp
 OutdoorAir:Node
 Timestep
 EnergyManagementSystem:Program
