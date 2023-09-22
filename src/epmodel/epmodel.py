@@ -8487,6 +8487,11 @@ class OutputControlFiles(BaseModel):
     output_tarcog: Optional[EPBoolean] = EPBoolean.yes
 
 
+class OutputControlTimestamp(BaseModel):
+    iso_8601_format: Optional[EPBoolean] = EPBoolean.no
+    timestamp_at_beginning_of_interval: Optional[EPBoolean] = EPBoolean.no
+
+
 class OptionType(Enum):
     time_series = "TimeSeries"
     time_series_and_tabular = "TimeSeriesAndTabular"
@@ -9431,6 +9436,10 @@ class EnergyPlusModel(BaseModel):
     ] = None
     output_control_files: Annotated[
         Optional[Dict[str, OutputControlFiles]], Field(alias="OutputControl:Files")
+    ] = None
+    output_control_timestamp: Annotated[
+        Optional[Dict[str, OutputControlTimestamp]],
+        Field(alias="OutputControl:Timestamp"),
     ] = None
     output_json: Annotated[
         Optional[Dict[str, OutputJson1]], Field(alias="Output:JSON")
