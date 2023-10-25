@@ -451,9 +451,9 @@ class ConstructionComplexFenestrationStateBuilder:
         )
         if layer_index == 1:
             attribute_key = (
-                f"outside_layer_directional_{direction.value}_absoptance_matrix_name"
+                f"outside_layer_directional_{direction.value}_absorptance_matrix_name"
             )
         else:
-            attribute_key = f"layer_{layer_index}_directional_{direction.value}_absoptance_matrix_name"
+            attribute_key = f"layer_{layer_index}_directional_{direction.value}_absorptance_matrix_name"
         self.attributes[attribute_key] = name
         return self
