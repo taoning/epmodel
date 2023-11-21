@@ -7,7 +7,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, RootModel, ConfigDict
+from pydantic import BaseModel, Field, RootModel, ConfigDict, PositiveFloat
 from typing_extensions import Annotated
 
 
@@ -3868,6 +3868,200 @@ class CoilHeatingDxSingleSpeed(BaseModel):
         str
     ] = None
 
+
+class CoilHeatingDxMultiSpeed(BaseModel):
+    availability_schedule_name: Optional[str] = None
+    air_inlet_node_name: str
+    air_outlet_node_name: str
+    minimum_outdoor_dry_bulb_temperature_for_compressor_operation: Optional[
+        float
+    ] = -8.0
+    outdoor_dry_bulb_temperature_to_turn_on_compressor: Optional[float] = None
+    crankcase_heater_capacity: Annotated[Optional[float], Field(ge=0.0)] = 0.0
+    crankcase_heater_capacity_function_of_temperature_curve_name: Optional[str] = None
+    maximum_outdoor_dry_bulb_temperature_for_crankcase_heater_operation: Annotated[
+        Optional[float], Field(ge=0.0)
+    ] = 10.0
+    defrost_energy_input_ratio_function_of_temperature_curve_name: Optional[str] = None
+    maximum_outdoor_dry_bulb_temperature_for_defrost_operation: Annotated[
+        Optional[float], Field(ge=0.0, le=7.22)
+    ] = 5.0
+    defrost_strategy: Optional[DefrostStrategy] = DefrostStrategy.reverse_cycle
+    defrost_control: Optional[DefrostControl] = DefrostControl.timed
+    defrost_time_period_fraction: Annotated[Optional[float], Field(ge=0.0)] = 0.058333
+    resistive_defrost_heater_capacity: Optional[
+        Union[
+            ResistiveDefrostHeaterCapacityItem,
+            DedicatedOutdoorAirLowSetpointTemperatureForDesignEnum,
+        ]
+    ] = 0.0
+    apply_part_load_fraction_to_speeds_greater_than_1: Optional[
+        EPBoolean
+    ] = EPBoolean.no
+    fuel_type: FuelType
+    region_number_for_calculating_hspf: Annotated[Optional[int], Field(ge=1, le=6)] = 4
+    number_of_speeds: Annotated[int, Field(ge=2, le=4)]
+    speed_1_gross_rated_heating_capacity: Union[Speed1RatedAirFlowRateItem, Literal["Autosize"]]
+    speed_1_gross_rated_heating_cop: Annotated[float, Field(gt=0.0)]
+    speed_1_rated_air_flow_rate: Union[Speed1RatedAirFlowRateItem, Literal["Autosize"]]
+    field_2017_speed_1_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(
+            ge=0.0,
+            le=1250.0,
+            alias="2017_speed_1_rated_supply_air_fan_power_per_volume_flow_rate"
+        )
+    ] = 773.3
+    field_2023_speed_1_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(
+            alias="2023_speed_1_rated_supply_air_fan_power_per_volume_flow_rate",
+            ge=0.0,
+            le=1505.0
+        )
+    ] = 934.4
+    speed_1_heating_capacity_function_of_temperature_curve_name: str
+    speed_1_heating_capacity_function_of_flow_fraction_curve_name: str
+    speed_1_energy_input_ratio_function_of_temperature_curve_name: str
+    speed_1_energy_input_ratio_function_of_flow_fraction_curve_name: str
+    speed_1_part_load_fraction_correlation_curve_name: str
+    speed_1_rated_waste_heat_fraction_of_power_input: Annotated[
+        Optional[float], Field(gt=0.0, le=1.0)
+    ] = 0.2
+    speed_1_waste_heat_function_of_temperature_curve_name: Optional[str] = None
+    speed_2_gross_rated_heating_capacity: Union[Speed2GrossRatedTotalCoolingCapacityItem, Literal["Autosize"]]
+    speed_2_gross_rated_heating_cop: Annotated[float, Field(gt=0.0)]
+    speed_2_rated_air_flow_rate: Union[Speed2RatedAirFlowRateItem, Literal["Autosize"]]
+    field_2017_speed_2_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(
+            alias="2017_speed_2_rated_supply_air_fan_power_per_volume_flow_rate",
+            ge=0.0,
+            le=1250.0
+        )
+    ] = 773.3
+    field_2023_speed_2_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(
+            alias="2023_speed_2_rated_supply_air_fan_power_per_volume_flow_rate",
+            ge=0.0,
+            le=1505.0
+        )
+    ] = 934.4
+    speed_2_heating_capacity_function_of_temperature_curve_name: str
+    speed_2_heating_capacity_function_of_flow_fraction_curve_name: str
+    speed_2_energy_input_ratio_function_of_temperature_curve_name: str
+    speed_2_energy_input_ratio_function_of_flow_fraction_curve_name: str
+    speed_2_part_load_fraction_correlation_curve_name: str
+    speed_2_rated_waste_heat_fraction_of_power_input: Annotated[
+        Optional[float], Field(le=1.0, gt=0.0)
+    ] = 0.2
+    speed_2_waste_heat_function_of_temperature_curve_name: Optional[str] = None
+    speed_3_gross_rated_heating_capacity: Optional[
+        Union[Speed3GrossRatedTotalCoolingCapacityItem, Literal["Autosize"]]
+    ] = None
+    speed_3_gross_rated_heating_cop: Annotated[Optional[float], Field(gt=0.0)] = None
+    speed_3_rated_air_flow_rate: Optional[
+        Union[Speed3RatedAirFlowRateItem, Literal["Autosize"]]
+    ] = None
+    field_2017_speed_3_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(
+            ge=0.0,
+            le=1250.0,
+            alias="2017_speed_3_rated_supply_air_fan_power_per_volume_flow_rate"
+        )
+    ] = 773.3
+    field_2023_speed_3_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(
+            ge=0.0,
+            le=1505.0,
+            alias="2023_speed_3_rated_supply_air_fan_power_per_volume_flow_rate"
+        )
+    ] = 934.4
+    speed_3_heating_capacity_function_of_temperature_curve_name: Optional[str] = None
+    speed_3_heating_capacity_function_of_flow_fraction_curve_name: Optional[str] = None
+    speed_3_energy_input_ratio_function_of_temperature_curve_name: Optional[str] = None
+    speed_3_energy_input_ratio_function_of_flow_fraction_curve_name: Optional[
+        str
+    ] = None
+    speed_3_part_load_fraction_correlation_curve_name: Optional[str] = None
+    speed_3_rated_waste_heat_fraction_of_power_input: Annotated[
+        Optional[float], Field(le=1.0, gt=0.0)
+    ] = 0.2
+    speed_3_waste_heat_function_of_temperature_curve_name: Optional[str] = None
+    speed_4_gross_rated_heating_capacity: Optional[
+        Union[PositiveFloat, Literal["Autosize"]]
+    ] = None
+    speed_4_gross_rated_heating_cop: Optional[PositiveFloat] = None
+    speed_4_rated_air_flow_rate: Optional[
+        Union[PositiveFloat, Literal["Autosize"]]
+    ] = None
+    field_2017_speed_4_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(ge=0.0, le=1250.0)
+    ] = 773.3
+    field_2023_speed_4_rated_supply_air_fan_power_per_volume_flow_rate: Annotated[
+        Optional[float], Field(ge=0.0, le=1505.0)
+    ] = 934.4
+    speed_4_heating_capacity_function_of_temperature_curve_name: Optional[str] = None
+    speed_4_heating_capacity_function_of_flow_fraction_curve_name: Optional[str] = None
+    speed_4_energy_input_ratio_function_of_temperature_curve_name: Optional[str] = None
+    speed_4_energy_input_ratio_function_of_flow_fraction_curve_name: Optional[
+        str
+    ] = None
+    speed_4_part_load_fraction_correlation_curve_name: Optional[str] = None
+    speed_4_rated_waste_heat_fraction_of_power_input: Annotated[
+        Optional[float], Field(le=1.0, gt=0.0)
+    ] = 0.2
+    speed_4_waste_heat_function_of_temperature_curve_name: Optional[str] = None
+    zone_name_for_evaporator_placement: Optional[str] = None
+    speed_1_secondary_coil_air_flow_rate: Optional[
+        Union[PositiveFloat, Literal["Autosize"]]
+    ] = None
+    speed_1_secondary_coil_fan_flow_scaling_factor: Optional[PositiveFloat] = 1.25
+    speed_1_nominal_sensible_heat_ratio_of_secondary_coil: Annotated[
+        Optional[float], Field(le=1.0, gt=0.0)
+    ] = None
+    speed_1_sensible_heat_ratio_modifier_function_of_temperature_curve_name: Optional[
+        str
+    ] = None
+    speed_1_sensible_heat_ratio_modifier_function_of_flow_fraction_curve_name: Optional[
+        str
+    ] = None
+    speed_2_secondary_coil_air_flow_rate: Optional[
+        Union[PositiveFloat, Literal["Autosize"]]
+    ] = None
+    speed_2_secondary_coil_fan_flow_scaling_factor: Optional[PositiveFloat] = 1.25
+    speed_2_nominal_sensible_heat_ratio_of_secondary_coil: Annotated[
+        Optional[float], Field(le=1.0, gt=0.0)
+    ] = None
+    speed_2_sensible_heat_ratio_modifier_function_of_temperature_curve_name: Optional[
+        str
+    ] = None
+    speed_2_sensible_heat_ratio_modifier_function_of_flow_fraction_curve_name: Optional[
+        str
+    ] = None
+    speed_3_secondary_coil_air_flow_rate: Optional[
+        Union[PositiveFloat, Literal["Autosize"]]
+    ] = None
+    speed_3_secondary_coil_fan_flow_scaling_factor: Optional[PositiveFloat] = 1.25
+    speed_3_nominal_sensible_heat_ratio_of_secondary_coil: Annotated[
+        Optional[float], Field(le=1.0, gt=0.0)
+    ] = None
+    speed_3_sensible_heat_ratio_modifier_function_of_temperature_curve_name: Optional[
+        str
+    ] = None
+    speed_3_sensible_heat_ratio_modifier_function_of_flow_fraction_curve_name: Optional[
+        str
+    ] = None
+    speed_4_secondary_coil_air_flow_rate: Optional[
+        Union[PositiveFloat, Literal["Autosize"]]
+    ] = None
+    speed_4_secondary_coil_fan_flow_scaling_factor: Optional[PositiveFloat] = 1.25
+    speed_4_nominal_sensible_heat_ratio_of_secondary_coil: Annotated[
+        Optional[float], Field(le=1.0, gt=0.0)
+    ] = None
+    speed_4_sensible_heat_ratio_modifier_function_of_temperature_curve_name: Optional[
+        str
+    ] = None
+    speed_4_sensible_heat_ratio_modifier_function_of_flow_fraction_curve_name: Optional[
+        str
+    ] = None
 
 class RatedWaterFlowRateItem(CoolingSupplyAirFlowRateItem):
     pass
@@ -9254,6 +9448,10 @@ class EnergyPlusModel(BaseModel):
     coil_heating_dx_single_speed: Annotated[
         Optional[Dict[str, CoilHeatingDxSingleSpeed]],
         Field(alias="Coil:Heating:DX:SingleSpeed"),
+    ] = None
+    coil_heating_dx_multi_speed: Annotated[
+        Optional[Dict[str, CoilHeatingDxMultiSpeed]],
+        Field(alias="Coil:Heating:DX:MultiSpeed"),
     ] = None
     coil_cooling_water_to_air_heat_pump_equation_fit: Annotated[
         Optional[Dict[str, CoilCoolingWaterToAirHeatPumpEquationFit]],

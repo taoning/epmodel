@@ -45,9 +45,9 @@ generate(
     use_double_quotes=True,
     enum_field_as_literal=LiteralType.One,
     reuse_model=True,
-    field_constraints=True,
-    use_annotated=True,
+    field_constraints=False,
+    use_annotated=False,
     set_default_enum_member=True,
-    target_python_version=PythonVersion.PY_39,
+    target_python_version=PythonVersion.PY_38,
     class_name="EnergyPlusModel",
 )
