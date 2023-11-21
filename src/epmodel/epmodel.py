@@ -8851,6 +8851,14 @@ class Space(BaseModel):
     tags: Optional[List[Tag]] = None
 
 
+class Space1(BaseModel):
+    space_name: str
+
+
+class SpaceList(BaseModel):
+    spaces: Optional[List[Space1]] = None
+
+
 class EnergyPlusModel(BaseModel):
     version: Annotated[Optional[Dict[str, Version]], Field(alias="Version")] = None
     simulation_control: Annotated[
@@ -8872,6 +8880,9 @@ class EnergyPlusModel(BaseModel):
         Optional[Dict[str, HeatBalanceAlgorithm]], Field(alias="HeatBalanceAlgorithm")
     ] = None
     space: Annotated[Optional[Dict[str, Space]], Field(alias="Space")] = None
+    space_list: Annotated[
+        Optional[Dict[str, SpaceList]], Field(alias="SpaceList")
+    ] = None
     zone_air_heat_balance_algorithm: Annotated[
         Optional[Dict[str, ZoneAirHeatBalanceAlgorithm]],
         Field(alias="ZoneAirHeatBalanceAlgorithm"),
