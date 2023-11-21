@@ -16,7 +16,7 @@ from datamodel_code_generator import (
 
 
 # Load in the keys to keep from schema
-key_paths = Path("keys.txt")
+key_paths = Path("keys2.txt")
 keys = key_paths.read_text().splitlines()
 
 # load schema
@@ -45,8 +45,8 @@ generate(
     use_double_quotes=True,
     enum_field_as_literal=LiteralType.One,
     reuse_model=True,
-    field_constraints=True,
-    use_annotated=True,
+    field_constraints=False,
+    use_annotated=False,
     set_default_enum_member=True,
     target_python_version=PythonVersion.PY_38,
     class_name="EnergyPlusModel",
