@@ -476,6 +476,24 @@ class ScheduleDayHourly(BaseModel):
     hour_24: Optional[float] = 0.0
 
 
+class InterpolateToTimestep(Enum):
+    field_ = ""
+    average = "Average"
+    linear = "Linear"
+    no = "No"
+
+
+class Datum(BaseModel):
+    time: Optional[str] = None
+    value_until_time: Optional[float] = None
+
+
+class ScheduleDayInterval(BaseModel):
+    schedule_type_limits_name: Optional[str] = None
+    interpolate_to_timestep: Optional[InterpolateToTimestep] = InterpolateToTimestep.no
+    data: Optional[List[Datum]] = None
+
+
 class ScheduleWeekDaily(BaseModel):
     sunday_schedule_day_name: str
     monday_schedule_day_name: str
@@ -506,13 +524,13 @@ class ScheduleYear(BaseModel):
     ] = None
 
 
-class Datum(BaseModel):
+class Datum1(BaseModel):
     field: Optional[Union[float, str]] = None
 
 
 class ScheduleCompact(BaseModel):
     schedule_type_limits_name: Optional[str] = None
-    data: Optional[List[Datum]] = None
+    data: Optional[List[Datum1]] = None
 
 
 class ScheduleConstant(BaseModel):
@@ -1148,6 +1166,18 @@ class SurfacePropertySolarIncidentInside(BaseModel):
     surface_name: str
     construction_name: str
     inside_surface_incident_sun_solar_radiation_schedule_name: str
+
+
+class TypeOfModeling(Enum):
+    field_ = ""
+    convective_underwater = "ConvectiveUnderwater"
+    gap_convection_radiation = "GapConvectionRadiation"
+    ground_coupled_surface = "GroundCoupledSurface"
+    underground_piping_system_surface = "UndergroundPipingSystemSurface"
+
+
+class SurfacePropertyOtherSideConditionsModel(BaseModel):
+    type_of_modeling: Optional[TypeOfModeling] = TypeOfModeling.gap_convection_radiation
 
 
 class ComplexFenestrationPropertySolarAbsorbedLayers(BaseModel):
@@ -8804,6 +8834,23 @@ class OutputDiagnostics(BaseModel):
     diagnostics: Optional[List[Diagnostic]] = None
 
 
+class Tag(BaseModel):
+    tag: Optional[str] = None
+
+
+class Space(BaseModel):
+    zone_name: str
+    ceiling_height: Optional[
+        Union[float, CeilingHeightEnum]
+    ] = CeilingHeightEnum.autocalculate
+    volume: Optional[Union[float, CeilingHeightEnum]] = CeilingHeightEnum.autocalculate
+    floor_area: Optional[
+        Union[float, CeilingHeightEnum]
+    ] = CeilingHeightEnum.autocalculate
+    space_type: Optional[str] = "General"
+    tags: Optional[List[Tag]] = None
+
+
 class EnergyPlusModel(BaseModel):
     version: Annotated[Optional[Dict[str, Version]], Field(alias="Version")] = None
     simulation_control: Annotated[
@@ -8824,6 +8871,7 @@ class EnergyPlusModel(BaseModel):
     heat_balance_algorithm: Annotated[
         Optional[Dict[str, HeatBalanceAlgorithm]], Field(alias="HeatBalanceAlgorithm")
     ] = None
+    space: Annotated[Optional[Dict[str, Space]], Field(alias="Space")] = None
     zone_air_heat_balance_algorithm: Annotated[
         Optional[Dict[str, ZoneAirHeatBalanceAlgorithm]],
         Field(alias="ZoneAirHeatBalanceAlgorithm"),
@@ -8875,6 +8923,9 @@ class EnergyPlusModel(BaseModel):
     ] = None
     schedule_day_hourly: Annotated[
         Optional[Dict[str, ScheduleDayHourly]], Field(alias="Schedule:Day:Hourly")
+    ] = None
+    schedule_day_interval: Annotated[
+        Optional[Dict[str, ScheduleDayInterval]], Field(alias="Schedule:Day:Interval")
     ] = None
     schedule_week_daily: Annotated[
         Optional[Dict[str, ScheduleWeekDaily]], Field(alias="Schedule:Week:Daily")
@@ -8984,6 +9035,10 @@ class EnergyPlusModel(BaseModel):
     surface_property_solar_incident_inside: Annotated[
         Optional[Dict[str, SurfacePropertySolarIncidentInside]],
         Field(alias="SurfaceProperty:SolarIncidentInside"),
+    ] = None
+    surface_property_other_side_conditions_model: Annotated[
+        Optional[Dict[str, SurfacePropertyOtherSideConditionsModel]],
+        Field(alias="SurfaceProperty:OtherSideConditionsModel"),
     ] = None
     complex_fenestration_property_solar_absorbed_layers: Annotated[
         Optional[Dict[str, ComplexFenestrationPropertySolarAbsorbedLayers]],
