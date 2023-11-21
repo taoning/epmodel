@@ -1880,6 +1880,23 @@ class HeatingDesignCapacityItem(DesignOutdoorAirFlowRateItem):
     pass
 
 
+class ZoneHvacBaseboardConvectiveElectric(BaseModel):
+    availability_schedule_name: Optional[str] = None
+    heating_design_capacity_method: Optional[
+        HeatingDesignCapacityMethod
+    ] = HeatingDesignCapacityMethod.heating_design_capacity
+    heating_design_capacity: Optional[
+        Union[HeatingDesignCapacityItem, DedicatedOutdoorAirLowSetpointTemperatureForDesignEnum]
+    ] = DedicatedOutdoorAirLowSetpointTemperatureForDesignEnum.autosize
+    heating_design_capacity_per_floor_area: Annotated[
+        Optional[float], Field(ge=0.0)
+    ] = None
+    fraction_of_autosized_heating_design_capacity: Annotated[
+        Optional[float], Field(ge=0.0)
+    ] = 1.0
+    efficiency: Annotated[Optional[float], Field(ge=0.0, le=1.0)] = 1.0
+
+
 class CentralCoolingCapacityControlMethod(Enum):
 
     bypass = "Bypass"
@@ -2664,6 +2681,7 @@ class ZoneHvacAirDistributionUnit(BaseModel):
         Optional[float], Field(ge=0.0, le=0.3)
     ] = 0.0
     design_specification_air_terminal_sizing_object_name: Optional[str] = None
+
 
 
 class LoadDistributionScheme(Enum):
@@ -9177,6 +9195,10 @@ class EnergyPlusModel(BaseModel):
     zone_hvac_air_distribution_unit: Annotated[
         Optional[Dict[str, ZoneHvacAirDistributionUnit]],
         Field(alias="ZoneHVAC:AirDistributionUnit"),
+    ] = None
+    zone_hvac_baseboard_convective_electric: Annotated[
+        Optional[Dict[str, ZoneHvacBaseboardConvectiveElectric]],
+        Field(alias="ZoneHVAC:Baseboard:Convective:Electric"),
     ] = None
     zone_hvac_equipment_list: Annotated[
         Optional[Dict[str, ZoneHvacEquipmentList]],
