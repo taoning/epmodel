@@ -576,6 +576,33 @@ class WindowMaterialSimpleGlazingSystem(BaseModel):
     visible_transmittance: Annotated[Optional[float], Field(gt=0.0, lt=1.0)] = None
 
 
+class Extension(BaseModel):
+    wavelength: Optional[float] = None
+    transmittance: Optional[float] = None
+    front_reflectance: Optional[float] = None
+    back_reflectance: Optional[float] = None
+
+
+class MaterialPropertyGlazingSpectralData(BaseModel):
+    wavelength_1: Optional[float] = None
+    transmittance_1: Optional[float] = None
+    front_reflectance_1: Optional[float] = None
+    back_reflectance_1: Optional[float] = None
+    wavelength_2: Optional[float] = None
+    transmittance_2: Optional[float] = None
+    front_reflectance_2: Optional[float] = None
+    back_reflectance_2: Optional[float] = None
+    wavelength_3: Optional[float] = None
+    transmittance_3: Optional[float] = None
+    front_reflectance_3: Optional[float] = None
+    back_reflectance_3: Optional[float] = None
+    wavelength_4: Optional[float] = None
+    transmittance_4: Optional[float] = None
+    front_reflectance_4: Optional[float] = None
+    back_reflectance_4: Optional[float] = None
+    extensions: Optional[List[Extension]] = None
+
+
 class OpticalDataType(Enum):
     bsdf = "BSDF"
     spectral = "Spectral"
@@ -9168,6 +9195,10 @@ class EnergyPlusModel(BaseModel):
     ] = None
     material_air_gap: Annotated[
         Optional[Dict[str, MaterialAirGap]], Field(alias="Material:AirGap")
+    ] = None
+    material_property_glazing_spectral_data: Annotated[
+        Optional[Dict[str, MaterialPropertyGlazingSpectralData]],
+        Field(alias='MaterialProperty:GlazingSpectralData')
     ] = None
     window_material_simple_glazing_system: Annotated[
         Optional[Dict[str, WindowMaterialSimpleGlazingSystem]],
