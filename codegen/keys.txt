@@ -14,6 +14,7 @@ AirLoopHVAC:ZoneMixer
 AirLoopHVAC:ZoneSplitter
 AirTerminal:SingleDuct:ConstantVolume:NoReheat
 AirTerminal:SingleDuct:VAV:Reheat
+AirflowNetwork:MultiZone:Surface:EffectiveLeakageArea
 AvailabilityManager:NightCycle
 AvailabilityManager:Scheduled
 AvailabilityManagerAssignmentList
@@ -211,6 +212,7 @@ WaterUse:Connections
 WaterUse:Equipment
 WindowGap:DeflectionState
 WindowGap:SupportPillar
+WindowMaterial:Blind
 WindowMaterial:ComplexShade
 WindowMaterial:Gap
 WindowMaterial:Gas
@@ -219,6 +221,8 @@ WindowMaterial:Glazing
 WindowMaterial:SimpleGlazingSystem
 WindowProperty:FrameAndDivider
 WindowThermalModel:Params
+ShadingControlType
+WindowShadingControl
 Zone
 ZoneAirContaminantBalance
 ZoneAirHeatBalanceAlgorithm
