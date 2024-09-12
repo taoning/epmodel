@@ -58,6 +58,7 @@ CoolingTower:VariableSpeed
 Curve:Bicubic
 Curve:Biquadratic
 Curve:Cubic
+Curve:Exponent
 Curve:Linear
 Curve:QuadLinear
 Curve:Quadratic

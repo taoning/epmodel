@@ -5835,6 +5835,18 @@ class CurveQuartic(BaseModel):
     )
     output_unit_type: Optional[OutputUnitType] = OutputUnitType.dimensionless
 
+class CurveExponent(BaseModel):
+    coefficient1_constant: float
+    coefficient2_constant: float
+    coefficient3_constant: float
+    minimum_value_of_x: float
+    maximum_value_of_x: float
+    minimum_curve_output: Optional[float] = None
+    maximum_curve_output: Optional[float] = None
+    input_unit_type_for_x: Optional[InputUnitTypeForX3] = (
+        InputUnitTypeForX3.dimensionless
+    )
+    output_unit_type: Optional[OutputUnitType] = OutputUnitType.dimensionless
 
 class CurveBicubic(BaseModel):
     coefficient1_constant: float
@@ -9284,6 +9296,9 @@ class EnergyPlusModel(BaseModel):
     curve_quartic: Annotated[
         Optional[Dict[str, CurveQuartic]], Field(None, alias="Curve:Quartic")
     ]
+    curve_exponent: Annotated[
+        Optional[Dict[str, CurveExponent]], Field(alias="Curve:Exponent")
+    ] = None
     curve_bicubic: Annotated[
         Optional[Dict[str, CurveBicubic]], Field(None, alias="Curve:Bicubic")
     ]
