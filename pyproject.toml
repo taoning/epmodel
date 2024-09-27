@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "epmodel"
-version = "0.7.0"
+version = "0.7.1"
 description = 'Data models for EnergyPlus automatically generated from EnergyPlus JSON schema using datamodel-code-generator.'
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [
   { name = "Taoning Wang", email = "taoningwang@lbl.gov" },
 ]
