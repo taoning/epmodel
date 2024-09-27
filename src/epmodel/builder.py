@@ -282,6 +282,7 @@ class ConstructionComplexFenestrationStateBuilder:
             epm.WindowMaterialGap(
                 gas_or_gas_mixture_=gas_type.value,
                 thickness=thickness,
+                pressure=101325.0,
             ),
         )
         self.attributes[f"gap_{layer_index}_name"] = name
