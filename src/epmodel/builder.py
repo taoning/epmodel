@@ -143,7 +143,7 @@ class EnergyPlusModel(epm.EnergyPlusModel):
         # Set the all fenestration surface constructions to the 1st cfs
         first_cfs = next(iter(self.construction_complex_fenestration_state.keys()))
         for window in self.fenestration_surface_detailed.values():
-            if window.surface_type == "Window":
+            if window.surface_type.value == "Window":
                 window.construction_name = first_cfs
 
 
