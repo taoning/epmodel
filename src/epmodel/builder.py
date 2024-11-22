@@ -2,27 +2,32 @@
 Functions: helper function usually to create base level components
 Classes: Factory class to create systems
 """
+
 from enum import Enum
 from typing import List, Optional
 
-from epmodel import epmodel as epm
 from pydantic import BaseModel
+
+from epmodel import epmodel as epm
 
 
 class Spectrum(Enum):
     """Spectrum for optical properties."""
+
     solar = "solar"
     visible = "visible"
 
 
 class Direction(Enum):
     """Direction for optical properties."""
+
     front = "front"
     back = "back"
 
 
 class RadiativeType(Enum):
     """Radiative type for optical properties."""
+
     transmittance = "transmittance"
     reflectance = "reflectance"
     absorptance = "absorptance"
@@ -30,12 +35,14 @@ class RadiativeType(Enum):
 
 class GlazingLayerType(Enum):
     """Product type for layer."""
+
     glazing = "glazing"
     shading = "shading"
 
 
 class ConstructionComplexFenestrationStateLayerInput(BaseModel):
     """Input for ConstructionComplexFenestrationStateLayer."""
+
     name: str
     product_type: GlazingLayerType
     thickness: float
@@ -49,17 +56,19 @@ class ConstructionComplexFenestrationStateLayerInput(BaseModel):
 
 class ConstructionComplexFenestrationStateGapInput(BaseModel):
     """Input for ConstructionComplexFenestrationStateGap."""
+
     gas: epm.GasType
     thickness: float
 
 
 class ConstructionComplexFenestrationStateInput(BaseModel):
     """Input for ConstructionComplexFenestrationState."""
+
     layers: List[ConstructionComplexFenestrationStateLayerInput]
     gaps: List[ConstructionComplexFenestrationStateGapInput]
     solar_reflectance_back: List[List[float]]
-    solar_transmittance_back: List[List[float]]
-    visible_transmittance_back: List[List[float]]
+    solar_transmittance_front: List[List[float]]
+    visible_reflectance_back: List[List[float]]
     visible_transmittance_front: List[List[float]]
     matrix_basis: str = "Full Klems"
 
@@ -82,9 +91,7 @@ def build_matrix_two_dimension_single_row(
     )
 
 
-def build_matrix_two_dimension(
-    matrix: List[List[float]]
-) -> epm.MatrixTwoDimension:
+def build_matrix_two_dimension(matrix: List[List[float]]) -> epm.MatrixTwoDimension:
     """Get MatrixTwoDimension object from matrix.
 
     Args:
@@ -165,7 +172,9 @@ class ConstructionComplexFenestrationStateBuilder:
         if self.input is not None:
             self.set_all_input(self.input)
         if self.attributes == {}:
-            raise ValueError("Attributes not set for ConstructionComplexFenestrationState")
+            raise ValueError(
+                "Attributes not set for ConstructionComplexFenestrationState"
+            )
         self.energyplus_model.add(
             "construction_complex_fenestration_state",
             self.name,
@@ -196,14 +205,15 @@ class ConstructionComplexFenestrationStateBuilder:
             Direction.front,
             RadiativeType.transmittance,
             f"{self.name}_TfSol",
-            input.solar_transmittance_back,
+            input.solar_transmittance_front,
         )
+        # typo in schema
         self.set_optical_complex_matrix_name(
             Spectrum.visible,
             Direction.back,
             RadiativeType.transmittance,
             f"{self.name}_Tbvis",
-            input.visible_transmittance_back,
+            input.visible_reflectance_back,
         )
         self.set_optical_complex_matrix_name(
             Spectrum.visible,
