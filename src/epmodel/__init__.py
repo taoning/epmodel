@@ -1,7 +1,6 @@
 from .builder import (
     ConstructionComplexFenestrationStateInput,
     ConstructionComplexFenestrationStateLayerInput,
-    ConstructionComplexFenestrationStateGapInput,
     ConstructionComplexFenestrationStateBuilder,
     EnergyPlusModel,
 )

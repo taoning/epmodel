@@ -4,7 +4,7 @@ Classes: Factory class to create systems
 """
 
 from enum import Enum
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from pydantic import BaseModel
 
@@ -53,19 +53,11 @@ class ConstructionComplexFenestrationStateLayerInput(BaseModel):
     directional_absorptance_front: List[float]
     directional_absorptance_back: List[float]
 
-
-class ConstructionComplexFenestrationStateGapInput(BaseModel):
-    """Input for ConstructionComplexFenestrationStateGap."""
-
-    gas: epm.GasType
-    thickness: float
-
-
 class ConstructionComplexFenestrationStateInput(BaseModel):
     """Input for ConstructionComplexFenestrationState."""
 
     layers: List[ConstructionComplexFenestrationStateLayerInput]
-    gaps: List[ConstructionComplexFenestrationStateGapInput]
+    gaps: List[Union[epm.WindowMaterialGasMixture, epm.WindowMaterialGas]]
     solar_reflectance_back: List[List[float]]
     solar_transmittance_front: List[List[float]]
     visible_reflectance_back: List[List[float]]
@@ -246,21 +238,19 @@ class ConstructionComplexFenestrationStateBuilder:
                 layer.conductivity,
                 layer.thickness,
             )
-
+        
         for idx, gap in enumerate(input.gaps):
             self.set_gap(
                 idx + 1,
                 f"{self.name}_gap_{idx + 1}",
-                gap.gas,
-                gap.thickness,
+                gap,
             )
 
     def set_gap(
         self,
         layer_index: int,
         name: str,
-        gas_type: epm.GasType,
-        thickness: float,
+        gap: Union[epm.WindowMaterialGas, epm.WindowMaterialGasMixture],
     ) -> "ConstructionComplexFenestrationStateBuilder":
         """Set gap layer.
 
@@ -278,20 +268,28 @@ class ConstructionComplexFenestrationStateBuilder:
         """
         if layer_index < 1 or layer_index > 4:
             raise ValueError("Layer index must be between 1 and 4.")
-        self.energyplus_model.add(
-            "window_material_gas",
-            gas_type.value,
-            epm.WindowMaterialGas(
-                gas_type=gas_type,
-                thickness=thickness,
-            ),
-        )
+        gas_name = f"{name}_gas"            
+        if isinstance(gap, epm.WindowMaterialGas):
+            self.energyplus_model.add(
+                "window_material_gas",
+                gas_name, 
+                gap,
+            )        
+        elif isinstance(gap, epm.WindowMaterialGasMixture):
+            self.energyplus_model.add(
+                "window_material_gas_mixture",
+                gas_name,
+                gap
+            )
+        else:
+            raise NotImplementedError(f"Gas type {gap} not supported")
+        
         self.energyplus_model.add(
             "window_material_gap",
             name,
             epm.WindowMaterialGap(
-                gas_or_gas_mixture_=gas_type.value,
-                thickness=thickness,
+                gas_or_gas_mixture_=gas_name,
+                thickness=gap.thickness,
                 pressure=101325.0,
             ),
         )
