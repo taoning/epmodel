@@ -33,25 +33,38 @@ class RadiativeType(Enum):
     absorptance = "absorptance"
 
 
-class GlazingLayerType(Enum):
+class LayerType(Enum):
     """Product type for layer."""
 
     glazing = "glazing"
-    shading = "shading"
+    blinds = "blinds"
+    fabric = "fabric"
 
 
 class ConstructionComplexFenestrationStateLayerInput(BaseModel):
     """Input for ConstructionComplexFenestrationStateLayer."""
 
     name: str
-    product_type: GlazingLayerType
+    product_type: LayerType
     thickness: float
-    conductivity: float
+    conductivity: None | float
     emissivity_front: float
     emissivity_back: float
     infrared_transmittance: float
     directional_absorptance_front: List[float]
     directional_absorptance_back: List[float]
+    top_opening_multiplier: float
+    bottom_opening_multiplier: float
+    left_side_opening_multiplier: float
+    right_side_opening_multiplier: float
+    front_opening_multiplier: float
+    slat_width: float
+    slat_spacing: float
+    slat_thickness: float
+    slat_angle: float
+    slat_conductivity: float
+    slat_curve: float
+
 
 class ConstructionComplexFenestrationStateInput(BaseModel):
     """Input for ConstructionComplexFenestrationState."""
@@ -228,17 +241,8 @@ class ConstructionComplexFenestrationStateBuilder:
                 f"{self.name}_layer_{idx+1}_bAbs",
                 layer.directional_absorptance_back,
             )
-            self.set_layer(
-                idx + 1,
-                layer.name,
-                layer.product_type,
-                layer.emissivity_front,
-                layer.emissivity_back,
-                layer.infrared_transmittance,
-                layer.conductivity,
-                layer.thickness,
-            )
-        
+            self.set_layer(idx + 1, layer)
+
         for idx, gap in enumerate(input.gaps):
             self.set_gap(
                 idx + 1,
@@ -268,22 +272,18 @@ class ConstructionComplexFenestrationStateBuilder:
         """
         if layer_index < 1 or layer_index > 4:
             raise ValueError("Layer index must be between 1 and 4.")
-        gas_name = f"{name}_gas"            
+        gas_name = f"{name}_gas"
         if isinstance(gap, epm.WindowMaterialGas):
             self.energyplus_model.add(
                 "window_material_gas",
-                gas_name, 
-                gap,
-            )        
-        elif isinstance(gap, epm.WindowMaterialGasMixture):
-            self.energyplus_model.add(
-                "window_material_gas_mixture",
                 gas_name,
-                gap
+                gap,
             )
+        elif isinstance(gap, epm.WindowMaterialGasMixture):
+            self.energyplus_model.add("window_material_gas_mixture", gas_name, gap)
         else:
             raise NotImplementedError(f"Gas type {gap} not supported")
-        
+
         self.energyplus_model.add(
             "window_material_gap",
             name,
@@ -360,13 +360,7 @@ class ConstructionComplexFenestrationStateBuilder:
     def set_layer(
         self,
         layer_index: int,
-        name: str,
-        product_type: GlazingLayerType,
-        emissivity_front: float,
-        emissivity_back: float,
-        ir_transmittance: float,
-        conductivity: float,
-        thickness: float,
+        layer: ConstructionComplexFenestrationStateLayerInput,
     ) -> "ConstructionComplexFenestrationStateBuilder":
         """Set layer.
 
@@ -389,44 +383,55 @@ class ConstructionComplexFenestrationStateBuilder:
         if layer_index < 1 or layer_index > 5:
             raise ValueError("Layer index must be between 1 and 5.")
 
-        if product_type == GlazingLayerType.glazing:
+        if layer.product_type == LayerType.glazing:
             self.energyplus_model.add(
                 "window_material_glazing",
-                name,
+                layer.name,
                 epm.WindowMaterialGlazing(
-                    back_side_infrared_hemispherical_emissivity=emissivity_back,
-                    conductivity=conductivity,
-                    front_side_infrared_hemispherical_emissivity=emissivity_front,
-                    infrared_transmittance_at_normal_incidence=ir_transmittance,
+                    back_side_infrared_hemispherical_emissivity=layer.emissivity_back,
+                    conductivity=layer.conductivity,
+                    front_side_infrared_hemispherical_emissivity=layer.emissivity_front,
+                    infrared_transmittance_at_normal_incidence=layer.infrared_transmittance,
                     optical_data_type=epm.OpticalDataType.bsdf,
                     poisson_s_ratio=0.22,
-                    thickness=thickness,
+                    thickness=layer.thickness,
                     window_glass_spectral_data_set_name="",
                 ),
             )
         # Assuming shading if not glazing
         else:
+
             self.energyplus_model.add(
                 "window_material_complex_shade",
-                name,
+                layer.name,
                 epm.WindowMaterialComplexShade(
-                    back_emissivity=emissivity_back,
-                    top_opening_multiplier=0,
-                    bottom_opening_multiplier=0,
-                    left_side_opening_multiplier=0,
-                    right_side_opening_multiplier=0,
-                    front_opening_multiplier=0.05,
-                    conductivity=conductivity,
-                    front_emissivity=emissivity_front,
-                    ir_transmittance=ir_transmittance,
-                    layer_type=epm.LayerType.bsdf,
-                    thickness=thickness,
+                    back_emissivity=layer.emissivity_back,
+                    top_opening_multiplier=layer.top_opening_multiplier,
+                    bottom_opening_multiplier=layer.bottom_opening_multiplier,
+                    left_side_opening_multiplier=layer.left_side_opening_multiplier,
+                    right_side_opening_multiplier=layer.right_side_opening_multiplier,
+                    front_opening_multiplier=layer.front_opening_multiplier,
+                    conductivity=layer.conductivity,
+                    front_emissivity=layer.emissivity_front,
+                    ir_transmittance=layer.infrared_transmittance,
+                    layer_type=(
+                        epm.LayerType.bsdf
+                        if layer.product_type == LayerType.fabric
+                        else epm.LayerType.venetian_horizontal
+                    ),
+                    thickness=layer.thickness,
+                    slat_width=layer.slat_width,
+                    slat_spacing=layer.slat_spacing,
+                    slat_thickness=layer.slat_thickness,
+                    slat_angle=layer.slat_angle,
+                    slat_conductivity=layer.slat_conductivity,
+                    slat_curve=layer.slat_curve,
                 ),
             )
         layer_key = (
             f"layer_{layer_index}_name" if layer_index > 1 else "outside_layer_name"
         )
-        self.attributes[layer_key] = name
+        self.attributes[layer_key] = layer.name
         return self
 
     def set_layer_directional_absorptance_matrix_name(

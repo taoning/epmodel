@@ -5835,6 +5835,7 @@ class CurveQuartic(BaseModel):
     )
     output_unit_type: Optional[OutputUnitType] = OutputUnitType.dimensionless
 
+
 class CurveExponent(BaseModel):
     coefficient1_constant: float
     coefficient2_constant: float
@@ -5847,6 +5848,7 @@ class CurveExponent(BaseModel):
         InputUnitTypeForX3.dimensionless
     )
     output_unit_type: Optional[OutputUnitType] = OutputUnitType.dimensionless
+
 
 class CurveBicubic(BaseModel):
     coefficient1_constant: float
