@@ -1052,8 +1052,8 @@
             "minimum_part_load_ratio": 0.0,
             "nominal_capacity": "Autosize",
             "nominal_thermal_efficiency": 0.75,
+            "on_cycle_parasitic_electric_load": 0.0,
             "optimum_part_load_ratio": 1.0,
-            "parasitic_electric_load": 0.0,
             "sizing_factor": 1.0,
             "water_outlet_upper_temperature_limit": 95.0
         }
@@ -8785,7 +8785,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 4.0,
+            "watts_per_floor_area": 4.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Bath_ZN_1_FLR_1"
         },
         "Cafeteria_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8795,7 +8795,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "KITCHEN_ELEC_EQUIP_SCH",
-            "watts_per_zone_floor_area": 25.39,
+            "watts_per_floor_area": 25.39,
             "zone_or_zonelist_or_space_or_spacelist_name": "Cafeteria_ZN_1_FLR_1"
         },
         "Computer_Class_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8805,7 +8805,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 20.0,
+            "watts_per_floor_area": 20.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Computer_Class_ZN_1_FLR_1"
         },
         "Corner_Class_1_Pod_1_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8815,7 +8815,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1"
         },
         "Corner_Class_1_Pod_2_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8825,7 +8825,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_1_Pod_2_ZN_1_FLR_1"
         },
         "Corner_Class_1_Pod_3_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8835,7 +8835,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_1_Pod_3_ZN_1_FLR_1"
         },
         "Corner_Class_2_Pod_1_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8845,7 +8845,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_2_Pod_1_ZN_1_FLR_1"
         },
         "Corner_Class_2_Pod_2_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8855,7 +8855,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_2_Pod_2_ZN_1_FLR_1"
         },
         "Corner_Class_2_Pod_3_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8865,7 +8865,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_2_Pod_3_ZN_1_FLR_1"
         },
         "Corridor_Pod_1_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8875,7 +8875,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 4.0,
+            "watts_per_floor_area": 4.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corridor_Pod_1_ZN_1_FLR_1"
         },
         "Corridor_Pod_2_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8885,7 +8885,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 4.0,
+            "watts_per_floor_area": 4.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corridor_Pod_2_ZN_1_FLR_1"
         },
         "Corridor_Pod_3_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8895,7 +8895,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 4.0,
+            "watts_per_floor_area": 4.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corridor_Pod_3_ZN_1_FLR_1"
         },
         "Gym_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8905,7 +8905,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 5.0,
+            "watts_per_floor_area": 5.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Gym_ZN_1_FLR_1"
         },
         "Kitchen_ZN_1_FLR_1_ExhFan_Equip": {
@@ -8935,7 +8935,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Library_Media_Center_ZN_1_FLR_1"
         },
         "Lobby_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8945,7 +8945,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 4.0,
+            "watts_per_floor_area": 4.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Lobby_ZN_1_FLR_1"
         },
         "Main_Corridor_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8955,7 +8955,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 4.0,
+            "watts_per_floor_area": 4.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Main_Corridor_ZN_1_FLR_1"
         },
         "Mech_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8965,7 +8965,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 4.0,
+            "watts_per_floor_area": 4.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mech_ZN_1_FLR_1"
         },
         "Mult_Class_1_Pod_1_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8975,7 +8975,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_1_Pod_1_ZN_1_FLR_1"
         },
         "Mult_Class_1_Pod_2_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8985,7 +8985,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_1_Pod_2_ZN_1_FLR_1"
         },
         "Mult_Class_1_Pod_3_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -8995,7 +8995,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_1_Pod_3_ZN_1_FLR_1"
         },
         "Mult_Class_2_Pod_1_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -9005,7 +9005,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_2_Pod_1_ZN_1_FLR_1"
         },
         "Mult_Class_2_Pod_2_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -9015,7 +9015,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_2_Pod_2_ZN_1_FLR_1"
         },
         "Mult_Class_2_Pod_3_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -9025,7 +9025,7 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 15.0,
+            "watts_per_floor_area": 15.0,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_2_Pod_3_ZN_1_FLR_1"
         },
         "Offices_ZN_1_FLR_1_PlugMisc_Equip": {
@@ -9035,15 +9035,15 @@
             "fraction_lost": 0.0,
             "fraction_radiant": 0.5,
             "schedule_name": "BLDG_EQUIP_SCH",
-            "watts_per_zone_floor_area": 10.8,
+            "watts_per_floor_area": 10.8,
             "zone_or_zonelist_or_space_or_spacelist_name": "Offices_ZN_1_FLR_1"
         }
     },
     "EnvironmentalImpactFactors": {
         "EnvironmentalImpactFactors 1": {
             "district_cooling_cop": 4.18,
-            "district_heating_efficiency": 0.663,
-            "steam_conversion_efficiency": 0.585,
+            "district_heating_steam_conversion_efficiency": 0.585,
+            "district_heating_water_efficiency": 0.663,
             "total_carbon_equivalent_emission_factor_from_ch4": 6.2727,
             "total_carbon_equivalent_emission_factor_from_co2": 0.2727,
             "total_carbon_equivalent_emission_factor_from_n2o": 80.7272
@@ -10251,7 +10251,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 9.68,
+            "watts_per_floor_area": 9.68,
             "zone_or_zonelist_or_space_or_spacelist_name": "Bath_ZN_1_FLR_1"
         },
         "Cafeteria_ZN_1_FLR_1_Lights": {
@@ -10263,7 +10263,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Cafeteria_ZN_1_FLR_1"
         },
         "Computer_Class_ZN_1_FLR_1_Lights": {
@@ -10275,7 +10275,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Computer_Class_ZN_1_FLR_1"
         },
         "Corner_Class_1_Pod_1_ZN_1_FLR_1_Lights": {
@@ -10287,7 +10287,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_1_Pod_1_ZN_1_FLR_1"
         },
         "Corner_Class_1_Pod_2_ZN_1_FLR_1_Lights": {
@@ -10299,7 +10299,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_1_Pod_2_ZN_1_FLR_1"
         },
         "Corner_Class_1_Pod_3_ZN_1_FLR_1_Lights": {
@@ -10311,7 +10311,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_1_Pod_3_ZN_1_FLR_1"
         },
         "Corner_Class_2_Pod_1_ZN_1_FLR_1_Lights": {
@@ -10323,7 +10323,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_2_Pod_1_ZN_1_FLR_1"
         },
         "Corner_Class_2_Pod_2_ZN_1_FLR_1_Lights": {
@@ -10335,7 +10335,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_2_Pod_2_ZN_1_FLR_1"
         },
         "Corner_Class_2_Pod_3_ZN_1_FLR_1_Lights": {
@@ -10347,7 +10347,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corner_Class_2_Pod_3_ZN_1_FLR_1"
         },
         "Corridor_Pod_1_ZN_1_FLR_1_Lights": {
@@ -10359,7 +10359,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 5.38,
+            "watts_per_floor_area": 5.38,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corridor_Pod_1_ZN_1_FLR_1"
         },
         "Corridor_Pod_2_ZN_1_FLR_1_Lights": {
@@ -10371,7 +10371,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 5.38,
+            "watts_per_floor_area": 5.38,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corridor_Pod_2_ZN_1_FLR_1"
         },
         "Corridor_Pod_3_ZN_1_FLR_1_Lights": {
@@ -10383,7 +10383,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 5.38,
+            "watts_per_floor_area": 5.38,
             "zone_or_zonelist_or_space_or_spacelist_name": "Corridor_Pod_3_ZN_1_FLR_1"
         },
         "Gym_ZN_1_FLR_1_Lights": {
@@ -10395,7 +10395,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Gym_ZN_1_FLR_1"
         },
         "Kitchen_ZN_1_FLR_1_Lights": {
@@ -10407,7 +10407,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 12.91,
+            "watts_per_floor_area": 12.91,
             "zone_or_zonelist_or_space_or_spacelist_name": "Kitchen_ZN_1_FLR_1"
         },
         "Library_Media_Center_ZN_1_FLR_1_Lights": {
@@ -10419,7 +10419,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 13.99,
+            "watts_per_floor_area": 13.99,
             "zone_or_zonelist_or_space_or_spacelist_name": "Library_Media_Center_ZN_1_FLR_1"
         },
         "Lobby_ZN_1_FLR_1_Lights": {
@@ -10431,7 +10431,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 13.99,
+            "watts_per_floor_area": 13.99,
             "zone_or_zonelist_or_space_or_spacelist_name": "Lobby_ZN_1_FLR_1"
         },
         "Main_Corridor_ZN_1_FLR_1_Lights": {
@@ -10443,7 +10443,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 5.38,
+            "watts_per_floor_area": 5.38,
             "zone_or_zonelist_or_space_or_spacelist_name": "Main_Corridor_ZN_1_FLR_1"
         },
         "Mech_ZN_1_FLR_1_Lights": {
@@ -10455,7 +10455,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 16.14,
+            "watts_per_floor_area": 16.14,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mech_ZN_1_FLR_1"
         },
         "Mult_Class_1_Pod_1_ZN_1_FLR_1_Lights": {
@@ -10467,7 +10467,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_1_Pod_1_ZN_1_FLR_1"
         },
         "Mult_Class_1_Pod_2_ZN_1_FLR_1_Lights": {
@@ -10479,7 +10479,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_1_Pod_2_ZN_1_FLR_1"
         },
         "Mult_Class_1_Pod_3_ZN_1_FLR_1_Lights": {
@@ -10491,7 +10491,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_1_Pod_3_ZN_1_FLR_1"
         },
         "Mult_Class_2_Pod_1_ZN_1_FLR_1_Lights": {
@@ -10503,7 +10503,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_2_Pod_1_ZN_1_FLR_1"
         },
         "Mult_Class_2_Pod_2_ZN_1_FLR_1_Lights": {
@@ -10515,7 +10515,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_2_Pod_2_ZN_1_FLR_1"
         },
         "Mult_Class_2_Pod_3_ZN_1_FLR_1_Lights": {
@@ -10527,7 +10527,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 15.06,
+            "watts_per_floor_area": 15.06,
             "zone_or_zonelist_or_space_or_spacelist_name": "Mult_Class_2_Pod_3_ZN_1_FLR_1"
         },
         "Offices_ZN_1_FLR_1_Lights": {
@@ -10539,7 +10539,7 @@
             "return_air_fraction": 0.0,
             "return_air_fraction_calculated_from_plenum_temperature": "No",
             "schedule_name": "BLDG_LIGHT_SCH",
-            "watts_per_zone_floor_area": 11.84,
+            "watts_per_floor_area": 11.84,
             "zone_or_zonelist_or_space_or_spacelist_name": "Offices_ZN_1_FLR_1"
         }
     },
@@ -11467,7 +11467,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 10.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11483,7 +11483,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 1.39,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH_Cafeteria",
             "sensible_heat_fraction": "Autocalculate",
@@ -11499,7 +11499,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 3.33,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11515,7 +11515,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11531,7 +11531,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11547,7 +11547,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11563,7 +11563,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11579,7 +11579,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11595,7 +11595,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11611,7 +11611,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 10.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11627,7 +11627,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 10.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11643,7 +11643,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 10.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11659,7 +11659,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 3.33,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH_Gym",
             "sensible_heat_fraction": "Autocalculate",
@@ -11674,7 +11674,7 @@
             "clothing_insulation_schedule_name": "CLOTHING_SCH",
             "enable_ashrae_55_comfort_warnings": "No",
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people": 25.2,
             "number_of_people_calculation_method": "People",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
@@ -11691,7 +11691,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.35,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11707,7 +11707,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 10.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11723,7 +11723,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11739,7 +11739,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11755,7 +11755,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11771,7 +11771,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11787,7 +11787,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11803,7 +11803,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 4.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH",
             "sensible_heat_fraction": "Autocalculate",
@@ -11819,7 +11819,7 @@
             "enable_ashrae_55_comfort_warnings": "No",
             "floor_area_per_person": 20.0,
             "fraction_radiant": 0.3,
-            "mean_radiant_temperature_calculation_type": "ZoneAveraged",
+            "mean_radiant_temperature_calculation_type": "EnclosureAveraged",
             "number_of_people_calculation_method": "Area/Person",
             "number_of_people_schedule_name": "BLDG_OCC_SCH_Offices",
             "sensible_heat_fraction": "Autocalculate",
@@ -15915,7 +15915,7 @@
     },
     "Version": {
         "Version 1": {
-            "version_identifier": "23.1"
+            "version_identifier": "25.1"
         }
     },
     "WaterHeater:Mixed": {

@@ -8,16 +8,17 @@ from epmodel.builder import (
     ConstructionComplexFenestrationStateBuilder,
     ConstructionComplexFenestrationStateInput,
     ConstructionComplexFenestrationStateLayerInput,
-    GlazingLayerType,
+    LayerType,
 )
 from epmodel.epmodel import GasType, WindowMaterialGas
 
 
 @pytest.fixture
 def layer1_input():
+
     return ConstructionComplexFenestrationStateLayerInput(
         name="layer1",
-        product_type=GlazingLayerType.glazing,
+        product_type=LayerType.glazing,
         thickness=0.003,
         conductivity=1.0,
         emissivity_back=0.3,
@@ -25,6 +26,17 @@ def layer1_input():
         infrared_transmittance=0,
         directional_absorptance_back=[0 for _ in range(145)],
         directional_absorptance_front=[0 for _ in range(145)],
+        top_opening_multiplier=1.0,
+        bottom_opening_multiplier=1.0,
+        left_side_opening_multiplier=1.0,
+        right_side_opening_multiplier=1.0,
+        front_opening_multiplier=1.0,
+        slat_width=0.01,
+        slat_spacing=0.01,
+        slat_thickness=0.01,
+        slat_angle=0.0,
+        slat_conductivity=1.0,
+        slat_curve=0.0,
     )
 
 
@@ -32,7 +44,7 @@ def layer1_input():
 def layer2_input():
     return ConstructionComplexFenestrationStateLayerInput(
         name="layer2",
-        product_type=GlazingLayerType.glazing,
+        product_type=LayerType.glazing,
         thickness=0.003,
         conductivity=1.0,
         emissivity_back=0.3,
@@ -40,6 +52,17 @@ def layer2_input():
         infrared_transmittance=0,
         directional_absorptance_back=[0 for _ in range(145)],
         directional_absorptance_front=[0 for _ in range(145)],
+        top_opening_multiplier=1.0,
+        bottom_opening_multiplier=1.0,
+        left_side_opening_multiplier=1.0,
+        right_side_opening_multiplier=1.0,
+        front_opening_multiplier=1.0,
+        slat_width=0.01,
+        slat_spacing=0.01,
+        slat_thickness=0.01,
+        slat_angle=0.0,
+        slat_conductivity=1.0,
+        slat_curve=0.0,
     )
 
 
