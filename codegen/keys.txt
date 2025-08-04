@@ -248,3 +248,10 @@ ZoneMixing
 ZoneRefrigerationDoorMixing
 ZoneVentilation:DesignFlowRate
 ZoneVentilation:WindandStackOpenArea
+Generator:PVWatts
+ElectricLoadCenter:Inverter:PVWatts
+ElectricLoadCenter:Generators
+ElectricLoadCenter:Storage:Converter
+ElectricLoadCenter:Storage:Simple
+ElectricLoadCenter:Inverter:Simple
+ElectricLoadCenter:Distribution
